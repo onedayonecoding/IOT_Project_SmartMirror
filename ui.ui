@@ -73,12 +73,12 @@
     <string>음성인식</string>
    </property>
   </widget>
-  <widget class="QWidget" name="">
+  <widget class="QWidget" name="layoutWidget">
    <property name="geometry">
     <rect>
      <x>10</x>
      <y>530</y>
-     <width>291</width>
+     <width>308</width>
      <height>44</height>
     </rect>
    </property>
@@ -90,7 +90,7 @@
      <enum>QLayout::SetFixedSize</enum>
     </property>
     <item>
-     <widget class="QPushButton" name="pushButton_6">
+     <widget class="QPushButton" name="MirrorButton1">
       <property name="font">
        <font>
         <family>HY헤드라인M</family>
@@ -98,23 +98,7 @@
        </font>
       </property>
       <property name="text">
-       <string>On</string>
-      </property>
-     </widget>
-    </item>
-    <item>
-     <widget class="QPushButton" name="pushButton_7">
-      <property name="enabled">
-       <bool>true</bool>
-      </property>
-      <property name="font">
-       <font>
-        <family>HY헤드라인M</family>
-        <pointsize>12</pointsize>
-       </font>
-      </property>
-      <property name="text">
-       <string>Off</string>
+       <string>거울모드</string>
       </property>
      </widget>
     </item>
@@ -146,7 +130,7 @@
     </item>
    </layout>
   </widget>
-  <widget class="QWidget" name="">
+  <widget class="QWidget" name="layoutWidget">
    <property name="geometry">
     <rect>
      <x>20</x>
@@ -223,7 +207,7 @@
     </item>
    </layout>
   </widget>
-  <widget class="QWidget" name="">
+  <widget class="QWidget" name="layoutWidget">
    <property name="geometry">
     <rect>
      <x>400</x>
@@ -310,7 +294,7 @@
     </item>
    </layout>
   </widget>
-  <widget class="QWidget" name="">
+  <widget class="QWidget" name="layoutWidget">
    <property name="geometry">
     <rect>
      <x>760</x>
@@ -366,7 +350,7 @@
     </item>
    </layout>
   </widget>
-  <widget class="QWidget" name="">
+  <widget class="QWidget" name="layoutWidget">
    <property name="geometry">
     <rect>
      <x>760</x>
