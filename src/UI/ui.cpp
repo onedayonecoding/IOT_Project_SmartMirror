@@ -5,9 +5,6 @@
 
 double T=20.11; //현재온도 센서 위치 정해지면 바꾸어야함
 
-
-
-
 UI::UI(QWidget *parent)
     : QWidget(parent)
     , ui(new Ui::UI)
