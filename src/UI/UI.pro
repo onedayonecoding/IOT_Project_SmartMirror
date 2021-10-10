@@ -10,13 +10,18 @@ CONFIG += c++11
 
 SOURCES += \
     ../main.cpp \
+    DateTimeWidget.cpp \
+    setting.cpp \
     ui.cpp
 
 HEADERS += \
-    ../inc/ui.h
+    ../inc/ui.h \
+    DateTimeWidget.h \
+    setting.h
 
 FORMS += \
-    ui.ui
+    ui.ui\
+    setting.ui
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin
