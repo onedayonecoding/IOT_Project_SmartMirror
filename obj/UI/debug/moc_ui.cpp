@@ -22,8 +22,8 @@ QT_BEGIN_MOC_NAMESPACE
 QT_WARNING_PUSH
 QT_WARNING_DISABLE_DEPRECATED
 struct qt_meta_stringdata_UI_t {
-    const uint offsetsAndSize[12];
-    char stringdata0[49];
+    const uint offsetsAndSize[16];
+    char stringdata0[70];
 };
 #define QT_MOC_LITERAL(ofs, len) \
     uint(offsetof(qt_meta_stringdata_UI_t, stringdata0) + ofs), len 
@@ -34,11 +34,13 @@ QT_MOC_LITERAL(3, 10), // "MirrorMode"
 QT_MOC_LITERAL(14, 0), // ""
 QT_MOC_LITERAL(15, 15), // "MirrorModeClose"
 QT_MOC_LITERAL(31, 8), // "AirOnOff"
-QT_MOC_LITERAL(40, 8) // "FanOnOff"
+QT_MOC_LITERAL(40, 8), // "FanOnOff"
+QT_MOC_LITERAL(49, 7), // "Setting"
+QT_MOC_LITERAL(57, 12) // "SettingClose"
 
     },
     "UI\0MirrorMode\0\0MirrorModeClose\0AirOnOff\0"
-    "FanOnOff"
+    "FanOnOff\0Setting\0SettingClose"
 };
 #undef QT_MOC_LITERAL
 
@@ -48,7 +50,7 @@ static const uint qt_meta_data_UI[] = {
        9,       // revision
        0,       // classname
        0,    0, // classinfo
-       4,   14, // methods
+       6,   14, // methods
        0,    0, // properties
        0,    0, // enums/sets
        0,    0, // constructors
@@ -56,12 +58,16 @@ static const uint qt_meta_data_UI[] = {
        0,       // signalCount
 
  // slots: name, argc, parameters, tag, flags, initial metatype offsets
-       1,    0,   38,    2, 0x0a,    0 /* Public */,
-       3,    0,   39,    2, 0x0a,    1 /* Public */,
-       4,    0,   40,    2, 0x0a,    2 /* Public */,
-       5,    0,   41,    2, 0x0a,    3 /* Public */,
+       1,    0,   50,    2, 0x0a,    0 /* Public */,
+       3,    0,   51,    2, 0x0a,    1 /* Public */,
+       4,    0,   52,    2, 0x0a,    2 /* Public */,
+       5,    0,   53,    2, 0x0a,    3 /* Public */,
+       6,    0,   54,    2, 0x0a,    4 /* Public */,
+       7,    0,   55,    2, 0x0a,    5 /* Public */,
 
  // slots: parameters
+    QMetaType::Void,
+    QMetaType::Void,
     QMetaType::Void,
     QMetaType::Void,
     QMetaType::Void,
@@ -80,6 +86,8 @@ void UI::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, void **_
         case 1: _t->MirrorModeClose(); break;
         case 2: _t->AirOnOff(); break;
         case 3: _t->FanOnOff(); break;
+        case 4: _t->Setting(); break;
+        case 5: _t->SettingClose(); break;
         default: ;
         }
     }
@@ -94,7 +102,7 @@ const QMetaObject UI::staticMetaObject = { {
     nullptr,
 qt_incomplete_metaTypeArray<qt_meta_stringdata_UI_t
 
-, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>
+, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>
 
 
 >,
@@ -121,13 +129,13 @@ int UI::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
     if (_id < 0)
         return _id;
     if (_c == QMetaObject::InvokeMetaMethod) {
-        if (_id < 4)
+        if (_id < 6)
             qt_static_metacall(this, _c, _id, _a);
-        _id -= 4;
+        _id -= 6;
     } else if (_c == QMetaObject::RegisterMethodArgumentMetaType) {
-        if (_id < 4)
+        if (_id < 6)
             *reinterpret_cast<QMetaType *>(_a[0]) = QMetaType();
-        _id -= 4;
+        _id -= 6;
     }
     return _id;
 }

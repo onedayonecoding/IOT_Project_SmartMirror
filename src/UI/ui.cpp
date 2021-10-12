@@ -1,16 +1,22 @@
+#include <QPushButton>
+
 #include "../inc/ui.h"
 #include "ui_ui.h"
 #include "DateTimeWidget.h"
-#include "setting.h"
+#include "settingform.h"
+#include "ui_settingform.h"
+#include <fstream>
+using namespace std;
 
 
-double T=20.11; //현재온도 센서 위치 정해지면 바꾸어야함
 
 UI::UI(QWidget *parent)
     : QWidget(parent)
     , ui(new Ui::UI)
 {
+
     ui->setupUi(this);
+    settingForm = new SettingForm;
     QString css = QString("color : #fffff1");
     ui->MirrorButton1->setStyleSheet(css);
     ui->AirButton->setStyleSheet(css);
@@ -19,11 +25,26 @@ UI::UI(QWidget *parent)
     ui->AirLabel->setStyleSheet(css);
     ui->Fan->setStyleSheet(css);
 
+
     //시간 날짜 표시
     DateTimeWidget * datetimeWidget = new DateTimeWidget(this);
     ui->TimeLayout->addWidget(datetimeWidget);
 
     // UI 온도표시
+    ifstream fout("../../lib/temperature.txt");
+    double T;
+    string str;
+    int i=0;
+    while(getline(fout,str)){
+        if(i==1){
+            T=stod(str);
+            fout>>T;
+        }
+        else if(i==2)break;
+        i++;
+    }
+
+    fout.close();
     QString tem=QString("%1℃").arg(T); //
     ui->ULtemperature->setText(tem);
 
@@ -36,16 +57,19 @@ UI::UI(QWidget *parent)
     connect(ui->FanButton,SIGNAL(clicked()),SLOT(FanOnOff()));
 
     //설정 버튼
-    connect(ui->SettingButton,SIGNAL(clicked()),SLOT(setting()));
+    connect(ui->SettingButton,SIGNAL(clicked()),SLOT(Setting()));
+    connect(settingForm->ui->quitbutton,SIGNAL(clicked()),SLOT(SettingClose()));
 
 }
 
 UI::~UI()
 {
     delete ui;
+    if(settingForm) delete settingForm;
 }
 
 void UI::MirrorMode(){       //거울모드 메소드
+
     MirrorButton2->move(0,0);
     MirrorButton2->resize(1024,600);
     MirrorButton2->setStyleSheet("background:black");
@@ -78,8 +102,11 @@ void UI::FanOnOff(){
     }
 }
 
-void UI::setting(){
-
+void UI::Setting(){
+    settingForm->show();
+    settingForm->move(0,0);
+    settingForm->setStyleSheet("background:black");
 }
-
-
+void UI::SettingClose(){
+    settingForm->close();
+}

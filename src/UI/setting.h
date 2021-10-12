@@ -2,16 +2,20 @@
 #define SETTING_H
 
 #include <QWidget>
-namespace Ui { class setting; }
-class setting : public QWidget
+namespace Ui { class Setting; }
+
+class Setting : public QWidget
 {
     Q_OBJECT
 public:
-    explicit setting(QWidget *parent = nullptr);
+    explicit Setting(QWidget *parent = nullptr);
 
 signals:
 private:
-    Ui::setting *ui;
+    Ui::Setting *ui;
+
+public slots:
+    void setting();
 
 };
 

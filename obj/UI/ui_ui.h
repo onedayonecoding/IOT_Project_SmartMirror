@@ -10,6 +10,7 @@
 #define UI_UI_H
 
 #include <QtCore/QVariant>
+#include <QtGui/QIcon>
 #include <QtWidgets/QApplication>
 #include <QtWidgets/QGridLayout>
 #include <QtWidgets/QHBoxLayout>
@@ -29,14 +30,13 @@ public:
     QWidget *layoutWidget;
     QHBoxLayout *horizontalLayout;
     QPushButton *MirrorButton1;
-    QPushButton *pushButton_8;
-    QPushButton *pushButton_9;
+    QPushButton *SettingButton;
     QWidget *layoutWidget1;
     QGridLayout *gridLayout;
     QLabel *ULtemperature;
-    QLabel *label_2;
+    QLabel *AirLabel;
     QPushButton *AirButton;
-    QLabel *label_3;
+    QLabel *Fan;
     QPushButton *FanButton;
     QWidget *layoutWidget2;
     QVBoxLayout *verticalLayout_2;
@@ -46,10 +46,8 @@ public:
     QVBoxLayout *verticalLayout_3;
     QPushButton *pushButton_4;
     QPushButton *pushButton_5;
-    QWidget *layoutWidget4;
-    QVBoxLayout *verticalLayout;
-    QLabel *TimeLabel;
-    QLabel *DateLabel;
+    QWidget *verticalLayoutWidget;
+    QVBoxLayout *TimeLayout;
 
     void setupUi(QWidget *UI)
     {
@@ -74,7 +72,7 @@ public:
         pushButton_3->setFont(font);
         layoutWidget = new QWidget(UI);
         layoutWidget->setObjectName(QString::fromUtf8("layoutWidget"));
-        layoutWidget->setGeometry(QRect(10, 530, 308, 44));
+        layoutWidget->setGeometry(QRect(20, 510, 308, 81));
         horizontalLayout = new QHBoxLayout(layoutWidget);
         horizontalLayout->setSpacing(2);
         horizontalLayout->setObjectName(QString::fromUtf8("horizontalLayout"));
@@ -82,24 +80,24 @@ public:
         horizontalLayout->setContentsMargins(0, 0, 0, 0);
         MirrorButton1 = new QPushButton(layoutWidget);
         MirrorButton1->setObjectName(QString::fromUtf8("MirrorButton1"));
-        QFont font1;
-        font1.setFamilies({QString::fromUtf8("HY\355\227\244\353\223\234\353\235\274\354\235\270M")});
-        font1.setPointSize(12);
-        MirrorButton1->setFont(font1);
+        MirrorButton1->setMaximumSize(QSize(300, 150));
+        MirrorButton1->setFont(font);
 
         horizontalLayout->addWidget(MirrorButton1);
 
-        pushButton_8 = new QPushButton(layoutWidget);
-        pushButton_8->setObjectName(QString::fromUtf8("pushButton_8"));
-        pushButton_8->setFont(font1);
+        SettingButton = new QPushButton(layoutWidget);
+        SettingButton->setObjectName(QString::fromUtf8("SettingButton"));
+        SettingButton->setMaximumSize(QSize(100, 150));
+        SettingButton->setFont(font);
+        SettingButton->setText(QString::fromUtf8(""));
+        QIcon icon;
+        icon.addFile(QString::fromUtf8("images/setting.png"), QSize(), QIcon::Normal, QIcon::Off);
+        icon.addFile(QString::fromUtf8(":/images/setting.png"), QSize(), QIcon::Normal, QIcon::On);
+        SettingButton->setIcon(icon);
+        SettingButton->setIconSize(QSize(60, 60));
+        SettingButton->setCheckable(false);
 
-        horizontalLayout->addWidget(pushButton_8);
-
-        pushButton_9 = new QPushButton(layoutWidget);
-        pushButton_9->setObjectName(QString::fromUtf8("pushButton_9"));
-        pushButton_9->setFont(font1);
-
-        horizontalLayout->addWidget(pushButton_9);
+        horizontalLayout->addWidget(SettingButton);
 
         layoutWidget1 = new QWidget(UI);
         layoutWidget1->setObjectName(QString::fromUtf8("layoutWidget1"));
@@ -113,11 +111,11 @@ public:
 
         gridLayout->addWidget(ULtemperature, 0, 0, 2, 1);
 
-        label_2 = new QLabel(layoutWidget1);
-        label_2->setObjectName(QString::fromUtf8("label_2"));
-        label_2->setFont(font);
+        AirLabel = new QLabel(layoutWidget1);
+        AirLabel->setObjectName(QString::fromUtf8("AirLabel"));
+        AirLabel->setFont(font);
 
-        gridLayout->addWidget(label_2, 0, 1, 1, 1);
+        gridLayout->addWidget(AirLabel, 0, 1, 1, 1);
 
         AirButton = new QPushButton(layoutWidget1);
         AirButton->setObjectName(QString::fromUtf8("AirButton"));
@@ -125,11 +123,11 @@ public:
 
         gridLayout->addWidget(AirButton, 0, 2, 1, 1);
 
-        label_3 = new QLabel(layoutWidget1);
-        label_3->setObjectName(QString::fromUtf8("label_3"));
-        label_3->setFont(font);
+        Fan = new QLabel(layoutWidget1);
+        Fan->setObjectName(QString::fromUtf8("Fan"));
+        Fan->setFont(font);
 
-        gridLayout->addWidget(label_3, 1, 1, 1, 1);
+        gridLayout->addWidget(Fan, 1, 1, 1, 1);
 
         FanButton = new QPushButton(layoutWidget1);
         FanButton->setObjectName(QString::fromUtf8("FanButton"));
@@ -152,6 +150,9 @@ public:
 
         label_7 = new QLabel(layoutWidget2);
         label_7->setObjectName(QString::fromUtf8("label_7"));
+        QFont font1;
+        font1.setFamilies({QString::fromUtf8("HY\355\227\244\353\223\234\353\235\274\354\235\270M")});
+        font1.setPointSize(12);
         label_7->setFont(font1);
         label_7->setAlignment(Qt::AlignLeading|Qt::AlignLeft|Qt::AlignTop);
 
@@ -176,33 +177,12 @@ public:
 
         verticalLayout_3->addWidget(pushButton_5);
 
-        layoutWidget4 = new QWidget(UI);
-        layoutWidget4->setObjectName(QString::fromUtf8("layoutWidget4"));
-        layoutWidget4->setGeometry(QRect(390, 490, 201, 83));
-        verticalLayout = new QVBoxLayout(layoutWidget4);
-        verticalLayout->setSpacing(21);
-        verticalLayout->setObjectName(QString::fromUtf8("verticalLayout"));
-        verticalLayout->setContentsMargins(0, 0, 0, 0);
-        TimeLabel = new QLabel(layoutWidget4);
-        TimeLabel->setObjectName(QString::fromUtf8("TimeLabel"));
-        QFont font2;
-        font2.setFamilies({QString::fromUtf8("HY\355\227\244\353\223\234\353\235\274\354\235\270M")});
-        font2.setPointSize(22);
-        TimeLabel->setFont(font2);
-        TimeLabel->setAlignment(Qt::AlignCenter);
-
-        verticalLayout->addWidget(TimeLabel);
-
-        DateLabel = new QLabel(layoutWidget4);
-        DateLabel->setObjectName(QString::fromUtf8("DateLabel"));
-        QFont font3;
-        font3.setFamilies({QString::fromUtf8("HY\355\227\244\353\223\234\353\235\274\354\235\270M")});
-        font3.setPointSize(14);
-        DateLabel->setFont(font3);
-        DateLabel->setAlignment(Qt::AlignCenter);
-
-        verticalLayout->addWidget(DateLabel);
-
+        verticalLayoutWidget = new QWidget(UI);
+        verticalLayoutWidget->setObjectName(QString::fromUtf8("verticalLayoutWidget"));
+        verticalLayoutWidget->setGeometry(QRect(360, 490, 241, 80));
+        TimeLayout = new QVBoxLayout(verticalLayoutWidget);
+        TimeLayout->setObjectName(QString::fromUtf8("TimeLayout"));
+        TimeLayout->setContentsMargins(0, 0, 0, 0);
 
         retranslateUi(UI);
 
@@ -216,19 +196,15 @@ public:
         label_5->setText(QCoreApplication::translate("UI", "\353\202\240\354\224\250 \352\267\270\353\246\274", nullptr));
         pushButton_3->setText(QCoreApplication::translate("UI", "\354\235\214\354\204\261\354\235\270\354\213\235", nullptr));
         MirrorButton1->setText(QCoreApplication::translate("UI", "\352\261\260\354\232\270\353\252\250\353\223\234", nullptr));
-        pushButton_8->setText(QCoreApplication::translate("UI", "auto", nullptr));
-        pushButton_9->setText(QCoreApplication::translate("UI", "\354\204\244\354\240\225", nullptr));
         ULtemperature->setText(QCoreApplication::translate("UI", "\354\230\250\353\217\204", nullptr));
-        label_2->setText(QCoreApplication::translate("UI", "\354\227\220\354\226\264\354\273\250", nullptr));
+        AirLabel->setText(QCoreApplication::translate("UI", "\354\227\220\354\226\264\354\273\250", nullptr));
         AirButton->setText(QCoreApplication::translate("UI", "On", nullptr));
-        label_3->setText(QCoreApplication::translate("UI", "\354\204\240\355\222\215\352\270\260", nullptr));
+        Fan->setText(QCoreApplication::translate("UI", "\354\204\240\355\222\215\352\270\260", nullptr));
         FanButton->setText(QCoreApplication::translate("UI", "Off", nullptr));
         label_6->setText(QCoreApplication::translate("UI", "\354\235\274\354\240\225", nullptr));
         label_7->setText(QCoreApplication::translate("UI", "\354\235\274\354\240\225 \353\202\264\354\232\251", nullptr));
         pushButton_4->setText(QCoreApplication::translate("UI", "\352\270\260\353\212\2451 \353\262\204\355\212\274", nullptr));
         pushButton_5->setText(QCoreApplication::translate("UI", "\352\270\260\353\212\2452 \353\262\204\355\212\274", nullptr));
-        TimeLabel->setText(QCoreApplication::translate("UI", "\354\213\234\352\260\204", nullptr));
-        DateLabel->setText(QCoreApplication::translate("UI", "\353\202\240\354\247\234", nullptr));
     } // retranslateUi
 
 };

@@ -11,19 +11,24 @@ CONFIG += c++11
 SOURCES += \
     ../main.cpp \
     DateTimeWidget.cpp \
-    setting.cpp \
+    settingform.cpp \
     ui.cpp
 
 HEADERS += \
     ../inc/ui.h \
     DateTimeWidget.h \
-    setting.h
+    settingform.h
 
 FORMS += \
-    ui.ui\
-    setting.ui
+    settingform.ui \
+    ui.ui
+
+INCLUDEPATH =+ ../inc
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin
 else: unix:!android: target.path = /opt/$${TARGET}/bin
 !isEmpty(target.path): INSTALLS += target
+
+RESOURCES += \
+    images.qrc
