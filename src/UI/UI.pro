@@ -10,17 +10,17 @@ CONFIG += c++11
 
 SOURCES += \
     ../main.cpp \
-    DateTimeWidget.cpp \
-    settingform.cpp \
+    DateTimeWidget/DateTimeWidget.cpp \
+    settingform/settingform.cpp \
     ui.cpp
 
 HEADERS += \
     ../inc/ui.h \
-    DateTimeWidget.h \
-    settingform.h
+    DateTimeWidget/DateTimeWidget.h \
+    settingform/settingform.h
 
 FORMS += \
-    settingform.ui \
+    settingform/settingform.ui \
     ui.ui
 
 INCLUDEPATH =+ ../inc
@@ -32,3 +32,6 @@ else: unix:!android: target.path = /opt/$${TARGET}/bin
 
 RESOURCES += \
     images.qrc
+
+DISTFILES += \
+    ../weather.py

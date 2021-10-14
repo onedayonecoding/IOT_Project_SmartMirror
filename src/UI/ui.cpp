@@ -1,11 +1,16 @@
-#include <QPushButton>
+
 
 #include "../inc/ui.h"
 #include "ui_ui.h"
-#include "DateTimeWidget.h"
-#include "settingform.h"
+#include "DateTimeWidget/DateTimeWidget.h"
+#include "settingform/settingform.h"
 #include "ui_settingform.h"
+
+
 #include <fstream>
+#include <vector>
+#include <QPushButton>
+
 using namespace std;
 
 
@@ -31,20 +36,25 @@ UI::UI(QWidget *parent)
     ui->TimeLayout->addWidget(datetimeWidget);
 
     // UI 온도표시
-    ifstream fout("../../lib/temperature.txt");
-    double T;
-    string str;
-    int i=0;
-    while(getline(fout,str)){
-        if(i==1){
-            T=stod(str);
-            fout>>T;
-        }
-        else if(i==2)break;
-        i++;
-    }
+    double T=0;
+    vector<string> temp;
+    string word;
+    ifstream ifs;
+    ifs.open("../../lib/temperature.txt");               // 온도 파일 열기
 
-    fout.close();
+    if(!ifs.is_open()){
+        qDebug("could not open temperature");
+        exit(1);
+    }else{                                              // 두번째 단어가 온도일시
+        int i=0;
+        while(ifs>>word){
+         temp.push_back(word);
+         i++;
+         if(i==2)break;
+        }
+        T=stod(temp[1]);
+    }
+    ifs.close();                                        //온도 파일 닫기
     QString tem=QString("%1℃").arg(T); //
     ui->ULtemperature->setText(tem);
 
@@ -59,7 +69,6 @@ UI::UI(QWidget *parent)
     //설정 버튼
     connect(ui->SettingButton,SIGNAL(clicked()),SLOT(Setting()));
     connect(settingForm->ui->quitbutton,SIGNAL(clicked()),SLOT(SettingClose()));
-
 }
 
 UI::~UI()
