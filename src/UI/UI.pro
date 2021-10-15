@@ -12,15 +12,18 @@ SOURCES += \
     ../main.cpp \
     DateTimeWidget/DateTimeWidget.cpp \
     settingform/settingform.cpp \
+    schedule/schedule.cpp\
     ui.cpp
 
 HEADERS += \
     ../inc/ui.h \
     DateTimeWidget/DateTimeWidget.h \
-    settingform/settingform.h
+    settingform/settingform.h\
+    schedule/schedule.h
 
 FORMS += \
     settingform/settingform.ui \
+    schedule/schedule.ui\
     ui.ui
 
 INCLUDEPATH =+ ../inc

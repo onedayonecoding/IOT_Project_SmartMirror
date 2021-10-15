@@ -14,6 +14,10 @@ SettingForm::SettingForm(QWidget *parent) :
     ui->quitbutton->setStyleSheet(css);
     ui->onoff1->setStyleSheet("background : gray ; color : black");
     ui->onoff2->setStyleSheet("background : gray ; color : black");
+
+    connect(ui->quitbutton,SIGNAL(clicked()),SLOT(close()));
+
+    setStyleSheet("background:black");
 }
 
 SettingForm::~SettingForm()

@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>Schedule</class>
+ <widget class="QWidget" name="Schedule">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>1024</width>
+    <height>600</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>Schedule</string>
+  </property>
+  <widget class="QCalendarWidget" name="calendarWidget">
+   <property name="geometry">
+    <rect>
+     <x>0</x>
+     <y>0</y>
+     <width>800</width>
+     <height>600</height>
+    </rect>
+   </property>
+   <property name="font">
+    <font>
+     <pointsize>15</pointsize>
+    </font>
+   </property>
+   <property name="selectionMode">
+    <enum>QCalendarWidget::SingleSelection</enum>
+   </property>
+   <property name="horizontalHeaderFormat">
+    <enum>QCalendarWidget::ShortDayNames</enum>
+   </property>
+   <property name="verticalHeaderFormat">
+    <enum>QCalendarWidget::NoVerticalHeader</enum>
+   </property>
+   <property name="navigationBarVisible">
+    <bool>true</bool>
+   </property>
+   <property name="dateEditEnabled">
+    <bool>true</bool>
+   </property>
+  </widget>
+  <widget class="QPushButton" name="pushButton">
+   <property name="geometry">
+    <rect>
+     <x>850</x>
+     <y>490</y>
+     <width>131</width>
+     <height>81</height>
+    </rect>
+   </property>
+   <property name="font">
+    <font>
+     <family>HY헤드라인M</family>
+     <pointsize>20</pointsize>
+    </font>
+   </property>
+   <property name="text">
+    <string>Cancle</string>
+   </property>
+  </widget>
+ </widget>
+ <resources/>
+ <connections/>
+</ui>

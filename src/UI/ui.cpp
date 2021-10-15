@@ -1,11 +1,9 @@
 
-
 #include "../inc/ui.h"
 #include "ui_ui.h"
 #include "DateTimeWidget/DateTimeWidget.h"
 #include "settingform/settingform.h"
-#include "ui_settingform.h"
-
+#include "schedule/schedule.h"
 
 #include <fstream>
 #include <vector>
@@ -19,9 +17,10 @@ UI::UI(QWidget *parent)
     : QWidget(parent)
     , ui(new Ui::UI)
 {
-
     ui->setupUi(this);
     settingForm = new SettingForm;
+    scheDule = new Schedule;
+
     QString css = QString("color : #fffff1");
     ui->MirrorButton1->setStyleSheet(css);
     ui->AirButton->setStyleSheet(css);
@@ -29,7 +28,8 @@ UI::UI(QWidget *parent)
     ui->ULtemperature->setStyleSheet(css);
     ui->AirLabel->setStyleSheet(css);
     ui->Fan->setStyleSheet(css);
-
+    ui->SchButton->setStyleSheet(css);
+    ui->SchLabel->setStyleSheet(css);
 
     //시간 날짜 표시
     DateTimeWidget * datetimeWidget = new DateTimeWidget(this);
@@ -68,17 +68,31 @@ UI::UI(QWidget *parent)
 
     //설정 버튼
     connect(ui->SettingButton,SIGNAL(clicked()),SLOT(Setting()));
-    connect(settingForm->ui->quitbutton,SIGNAL(clicked()),SLOT(SettingClose()));
+
+    //일정 버튼
+    connect(ui->SchButton,SIGNAL(clicked()),SLOT(Sch()));
+
+    //일정 표시
+    string sdate;
+    QDate date;
+    date.currentDate();
+    sdate=date.toString().toStdString();
+
+    ifstream sch("../"+sdate+".txt");
+    string contents;
+    sch>>contents;
+    ui->SchLabel->setText(QString::fromStdString(contents));
+    sch.close();
 }
 
 UI::~UI()
 {
     delete ui;
     if(settingForm) delete settingForm;
+    if(scheDule) delete scheDule;
 }
 
 void UI::MirrorMode(){       //거울모드 메소드
-
     MirrorButton2->move(0,0);
     MirrorButton2->resize(1024,600);
     MirrorButton2->setStyleSheet("background:black");
@@ -114,8 +128,9 @@ void UI::FanOnOff(){
 void UI::Setting(){
     settingForm->show();
     settingForm->move(0,0);
-    settingForm->setStyleSheet("background:black");
 }
-void UI::SettingClose(){
-    settingForm->close();
+
+void UI::Sch(){
+    scheDule->show();
+    scheDule->move(0,0);
 }

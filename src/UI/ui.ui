@@ -246,7 +246,7 @@
      <number>5</number>
     </property>
     <item>
-     <widget class="QLabel" name="label_6">
+     <widget class="QPushButton" name="SchButton">
       <property name="font">
        <font>
         <family>HY헤드라인M</family>
@@ -259,7 +259,7 @@
      </widget>
     </item>
     <item>
-     <widget class="QLabel" name="label_7">
+     <widget class="QLabel" name="SchLabel">
       <property name="font">
        <font>
         <family>HY헤드라인M</family>

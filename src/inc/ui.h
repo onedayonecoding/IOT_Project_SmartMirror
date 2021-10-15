@@ -5,6 +5,7 @@
 #include <QPushButton>  //추후 메모리 문제로 고민 필요
 
 class SettingForm;
+class Schedule;
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class UI; }
@@ -25,11 +26,12 @@ public slots:
     void AirOnOff();
     void FanOnOff();
     void Setting();
-    void SettingClose();
+    void Sch();
 
 private:
     Ui::UI *ui;
     QPushButton *MirrorButton2=new QPushButton(0);   //거울모드 버튼
     SettingForm* settingForm;
+    Schedule* scheDule;
 };
 #endif // UI_H

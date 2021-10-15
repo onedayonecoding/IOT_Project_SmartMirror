@@ -1,0 +1,10 @@
+debug/main.o
+debug/DateTimeWidget.o
+debug/settingform.o
+debug/schedule.o
+debug/ui.o
+debug/qrc_images.o
+debug/moc_ui.o
+debug/moc_DateTimeWidget.o
+debug/moc_settingform.o
+debug/moc_schedule.o
