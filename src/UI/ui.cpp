@@ -5,9 +5,10 @@
 #include "settingform/settingform.h"
 #include "schedule/schedule.h"
 
-#include <fstream>
-#include <vector>
+#include <QFile>
 #include <QPushButton>
+#include <QProcess>
+#include <QTextBrowser>
 
 using namespace std;
 
@@ -36,23 +37,20 @@ UI::UI(QWidget *parent)
     ui->TimeLayout->addWidget(datetimeWidget);
 
     // UI 온도표시
-    double T=0;
-    vector<string> temp;
-    string word;
-    ifstream ifs;
-    ifs.open("../../lib/temperature.txt");               // 온도 파일 열기
+    QString T="0";
+    vector<QString> temp;
 
-    if(!ifs.is_open()){
+    QFile ifs("../../lib/temperature.txt");             // 온도 파일 열기
+
+    if(!ifs.open(QFile::ReadOnly | QFile::Text)){
         qDebug("could not open temperature");
         exit(1);
     }else{                                              // 두번째 단어가 온도일시
-        int i=0;
-        while(ifs>>word){
-         temp.push_back(word);
-         i++;
-         if(i==2)break;
-        }
-        T=stod(temp[1]);
+        QTextStream in(&ifs);
+        QString word=in.readLine();
+        qDebug()<<word;
+        QStringList temp = word.split(" ");
+        T = temp[1];
     }
     ifs.close();                                        //온도 파일 닫기
     QString tem=QString("%1℃").arg(T); //
@@ -73,16 +71,17 @@ UI::UI(QWidget *parent)
     connect(ui->SchButton,SIGNAL(clicked()),SLOT(Sch()));
 
     //일정 표시
-    string sdate;
-    QDate date;
-    date.currentDate();
-    sdate=date.toString().toStdString();
 
-    ifstream sch("../"+sdate+".txt");
-    string contents;
-    sch>>contents;
-    ui->SchLabel->setText(QString::fromStdString(contents));
+    QString sdate = QDate::currentDate().toString();
+    qDebug()<<sdate;
+    QFile sch("../"+sdate+".txt");
+    QString contents = sch.readAll();
+
+    ui->SchLabel->setText(contents);
     sch.close();
+
+    //날씨 표시
+
 }
 
 UI::~UI()
@@ -134,3 +133,5 @@ void UI::Sch(){
     scheDule->show();
     scheDule->move(0,0);
 }
+
+

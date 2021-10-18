@@ -15,8 +15,11 @@ if response.status_code == 200:
                             'div._tab_flicking > div.content_wrap > div.open >'
                             'div:nth-child(1) > div > div.weather_info > div >'
                             'div.temperature_info > p >'
-                            'span.weather.before_slash')
+                            'span.weather.before_slash').get_text()
     print(title)
+    f = open("weather.txt",'w')
+    f.write(title)
+    f.close()
 else:
     print(response.status_code)
 # if __name__ == "__main__":

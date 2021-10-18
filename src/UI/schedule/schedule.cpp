@@ -1,7 +1,7 @@
 #include "schedule.h"
 #include "ui_schedule.h"
 
-#include <fstream>
+#include <QFile>
 #include <QPushButton>
 
 using namespace std;
@@ -49,11 +49,12 @@ void Schedule::on_calendarWidget_clicked(const QDate &date)
 void Schedule::MakeFile(){
 
     QDate date = ui->calendarWidget->selectedDate();
-    string sdate=date.toString().toStdString();
+    QString sdate=date.toString();
 
-    ofstream makefile("../"+sdate+".txt");
-
+    QFile makefile("../"+sdate+".txt");
+    makefile.open(QFile::WriteOnly|QFile::Append|QFile::Text);
+    QTextStream SaveFile(&makefile);
     QString schtext = sch->toPlainText();
-    makefile <<schtext.toStdString();
+    SaveFile<<schtext;
     makefile.close();
 }
