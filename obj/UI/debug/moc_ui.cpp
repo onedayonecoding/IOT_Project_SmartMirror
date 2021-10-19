@@ -8,6 +8,7 @@
 
 #include <memory>
 #include "../../../src/inc/ui.h"
+#include <QtGui/qtextcursor.h>
 #include <QtCore/qbytearray.h>
 #include <QtCore/qmetatype.h>
 #if !defined(Q_MOC_OUTPUT_REVISION)
@@ -23,7 +24,7 @@ QT_WARNING_PUSH
 QT_WARNING_DISABLE_DEPRECATED
 struct qt_meta_stringdata_UI_t {
     const uint offsetsAndSize[16];
-    char stringdata0[70];
+    char stringdata0[61];
 };
 #define QT_MOC_LITERAL(ofs, len) \
     uint(offsetof(qt_meta_stringdata_UI_t, stringdata0) + ofs), len 
@@ -36,11 +37,11 @@ QT_MOC_LITERAL(15, 15), // "MirrorModeClose"
 QT_MOC_LITERAL(31, 8), // "AirOnOff"
 QT_MOC_LITERAL(40, 8), // "FanOnOff"
 QT_MOC_LITERAL(49, 7), // "Setting"
-QT_MOC_LITERAL(57, 12) // "SettingClose"
+QT_MOC_LITERAL(57, 3) // "Sch"
 
     },
     "UI\0MirrorMode\0\0MirrorModeClose\0AirOnOff\0"
-    "FanOnOff\0Setting\0SettingClose"
+    "FanOnOff\0Setting\0Sch"
 };
 #undef QT_MOC_LITERAL
 
@@ -87,7 +88,7 @@ void UI::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, void **_
         case 2: _t->AirOnOff(); break;
         case 3: _t->FanOnOff(); break;
         case 4: _t->Setting(); break;
-        case 5: _t->SettingClose(); break;
+        case 5: _t->Sch(); break;
         default: ;
         }
     }

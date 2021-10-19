@@ -3,6 +3,8 @@
 
 #include <QWidget>
 
+class UI;
+
 namespace Ui {
 class SettingForm;
 }
@@ -17,6 +19,10 @@ public:
     Ui::SettingForm *ui;
 
 private:
+    UI *openui;
+
+public slots:
+    void settingclose();
 
 };
 

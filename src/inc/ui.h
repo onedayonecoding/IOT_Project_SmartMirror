@@ -7,6 +7,12 @@
 #include <QTextBrowser>
 
 
+#define SIGINT          2
+#define SIGKILL         9
+#define SIGSEGV         11
+#define SIGTERM         15
+#define SIGTSTP         20
+
 class SettingForm;
 class Schedule;
 
@@ -21,6 +27,7 @@ class UI : public QWidget
 public:
     UI(QWidget *parent = nullptr);
     ~UI();
+    //void ExecuteProgram();
 
 
 public slots:
@@ -31,11 +38,14 @@ public slots:
     void Setting();
     void Sch();
 
+
 private:
     Ui::UI *ui;
     QPushButton *MirrorButton2=new QPushButton(0);   //거울모드 버튼
     SettingForm* settingForm;
     Schedule* scheDule;
+    QProcess *process;
+    //QTextBrowser *textBrowser;
 
 
 };

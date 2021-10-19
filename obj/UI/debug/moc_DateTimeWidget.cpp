@@ -7,7 +7,7 @@
 *****************************************************************************/
 
 #include <memory>
-#include "../../../src/UI/DateTimeWidget.h"
+#include "../../../src/UI/DateTimeWidget/DateTimeWidget.h"
 #include <QtGui/qtextcursor.h>
 #include <QtCore/qbytearray.h>
 #include <QtCore/qmetatype.h>

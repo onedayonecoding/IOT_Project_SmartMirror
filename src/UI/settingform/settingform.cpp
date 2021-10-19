@@ -1,11 +1,14 @@
 #include "settingform.h"
 #include "ui_settingform.h"
+#include "../../inc/ui.h"
 
 SettingForm::SettingForm(QWidget *parent) :
     QWidget(parent),
     ui(new Ui::SettingForm)
 {
     ui->setupUi(this);
+
+
     QString css = QString("color : white");
     ui->label1->setStyleSheet(css);
     ui->label2->setStyleSheet(css);
@@ -15,7 +18,7 @@ SettingForm::SettingForm(QWidget *parent) :
     ui->onoff1->setStyleSheet("background : gray ; color : black");
     ui->onoff2->setStyleSheet("background : gray ; color : black");
 
-    connect(ui->quitbutton,SIGNAL(clicked()),SLOT(close()));
+    connect(ui->quitbutton,SIGNAL(clicked()),SLOT(settingclose()));
 
     setStyleSheet("background:black");
 }
@@ -23,4 +26,13 @@ SettingForm::SettingForm(QWidget *parent) :
 SettingForm::~SettingForm()
 {
     delete ui;
+    if(openui) delete openui;
+}
+
+void SettingForm::settingclose(){
+    openui=new UI;
+    this->close();
+    openui->show();
+    openui->move(0,0);
+    openui->setStyleSheet("background:gray");
 }

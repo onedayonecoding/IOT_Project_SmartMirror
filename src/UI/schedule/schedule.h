@@ -5,6 +5,7 @@
 #include <QTextEdit>
 
 QT_BEGIN_NAMESPACE
+class UI;
 namespace Ui { class Schedule;
              }
 QT_END_NAMESPACE
@@ -21,6 +22,10 @@ public:
 
 public slots:
    void MakeFile();
+   void cancle();
+
+private:
+   UI *openui;
 
 private slots:
    void on_calendarWidget_clicked(const QDate &date);

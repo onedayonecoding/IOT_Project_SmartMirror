@@ -1,5 +1,6 @@
 #include "schedule.h"
 #include "ui_schedule.h"
+#include "../../inc/ui.h"
 
 #include <QFile>
 #include <QPushButton>
@@ -15,7 +16,7 @@ Schedule::Schedule(QWidget *parent)
     ui->pushButton->setStyleSheet(css);
     setStyleSheet("background:gray");
 
-    connect(ui->pushButton,SIGNAL(clicked()),SLOT(close()));
+    connect(ui->pushButton,SIGNAL(clicked()),SLOT(cancle()));
 }
 
 Schedule::~Schedule()
@@ -47,14 +48,26 @@ void Schedule::on_calendarWidget_clicked(const QDate &date)
 }
 
 void Schedule::MakeFile(){
-
     QDate date = ui->calendarWidget->selectedDate();
     QString sdate=date.toString();
-
     QFile makefile("../"+sdate+".txt");
+    QFile::remove("../"+sdate+".txt"); //기존 일정 내용 지우기 위해서
     makefile.open(QFile::WriteOnly|QFile::Append|QFile::Text);
     QTextStream SaveFile(&makefile);
     QString schtext = sch->toPlainText();
     SaveFile<<schtext;
     makefile.close();
+
+    openui=new UI;
+    openui->show();
+    openui->move(0,0);
+    openui->setStyleSheet("background:gray");
+}
+
+void Schedule::cancle(){
+    openui=new UI;
+    openui->show();
+    openui->move(0,0);
+    openui->setStyleSheet("background:gray");
+    this->close();
 }
