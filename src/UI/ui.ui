@@ -281,7 +281,7 @@
     <rect>
      <x>760</x>
      <y>240</y>
-     <width>181</width>
+     <width>228</width>
      <height>109</height>
     </rect>
    </property>
@@ -310,7 +310,7 @@
        </font>
       </property>
       <property name="text">
-       <string>기능1 버튼</string>
+       <string>감정인식</string>
       </property>
      </widget>
     </item>

@@ -160,7 +160,7 @@ public:
 
         layoutWidget3 = new QWidget(UI);
         layoutWidget3->setObjectName(QString::fromUtf8("layoutWidget3"));
-        layoutWidget3->setGeometry(QRect(760, 240, 181, 109));
+        layoutWidget3->setGeometry(QRect(760, 240, 228, 109));
         verticalLayout_3 = new QVBoxLayout(layoutWidget3);
         verticalLayout_3->setSpacing(15);
         verticalLayout_3->setObjectName(QString::fromUtf8("verticalLayout_3"));
@@ -203,7 +203,7 @@ public:
         FanButton->setText(QCoreApplication::translate("UI", "Off", nullptr));
         SchButton->setText(QCoreApplication::translate("UI", "\354\235\274\354\240\225", nullptr));
         SchLabel->setText(QCoreApplication::translate("UI", "\354\235\274\354\240\225 \353\202\264\354\232\251", nullptr));
-        pushButton_4->setText(QCoreApplication::translate("UI", "\352\270\260\353\212\2451 \353\262\204\355\212\274", nullptr));
+        pushButton_4->setText(QCoreApplication::translate("UI", "\352\260\220\354\240\225\354\235\270\354\213\235", nullptr));
         pushButton_5->setText(QCoreApplication::translate("UI", "\352\270\260\353\212\2452 \353\262\204\355\212\274", nullptr));
     } // retranslateUi
 
