@@ -1,4 +1,4 @@
-#include "DateTimeWidget.h"
+#include "../../inc/DateTimeWidget.h"
 #include <QVBoxLayout>
 
 DateTimeWidget::DateTimeWidget(QWidget *parent) : QWidget(parent)

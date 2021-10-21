@@ -1,13 +1,14 @@
 #include "../inc/ui.h"
 #include "ui_ui.h"
-#include "DateTimeWidget/DateTimeWidget.h"
-#include "settingform/settingform.h"
-#include "schedule/schedule.h"
+#include "../inc/DateTimeWidget.h"
+#include "../inc/settingform.h"
+#include "../inc/schedule.h"
 
 #include <QFile>
 #include <QPushButton>
 #include <QProcess>
-//#include <QTextCodec>  QT5 가능
+#include <QTextStream>
+#include <QTextCodec> // QT5 가능
 
 using namespace std;
 
@@ -19,6 +20,10 @@ UI::UI(QWidget *parent)
     ui->setupUi(this);
     settingForm = new SettingForm;
     scheDule = new Schedule;
+
+    this->move(0,0);
+    this->setStyleSheet("background:Black");
+    this->setWindowFlag(Qt::FramelessWindowHint);
 
     // 글씨 흰색으로 변환
     QString css = QString("color : #fffff1");
@@ -33,6 +38,13 @@ UI::UI(QWidget *parent)
     ui->WLabel->setStyleSheet(css);
     ui->WeatherLabel->setStyleSheet(css);
 
+
+    //buttoncolor
+     css = QString("selection-background-color : #555555; color:#fffff1");
+     ui->MindButton->setStyleSheet(css);
+
+
+
     //시간 날짜 표시
     DateTimeWidget * datetimeWidget = new DateTimeWidget(this);
     ui->TimeLayout->addWidget(datetimeWidget);
@@ -46,12 +58,12 @@ UI::UI(QWidget *parent)
     if(!t.open(QFile::ReadOnly | QFile::Text)){
         qDebug("could not open temperature");
         exit(1);
-    }else{                                              // 두번째 단어가 온도일시
+    }else{                                              // 3번째 단어가 온도일시
         QTextStream in(&t);
         QString word=in.readLine();
-        qDebug()<<word;
+        //qDebug()<<word;
         QStringList temp = word.split(" ");
-        T = temp[1];
+        T = temp[2];
     }
     t.close();                                        //온도 파일 닫기
     QString tem=QString("%1℃").arg(T); //
@@ -73,7 +85,7 @@ UI::UI(QWidget *parent)
 
     //일정 표시
     QString sdate = QDate::currentDate().toString();
-    qDebug()<<sdate;
+    //qDebug()<<sdate;
     QFile sch("../"+sdate+".txt");
 
     if(!sch.open(QFile::ReadOnly | QFile::Text)){
@@ -87,10 +99,10 @@ UI::UI(QWidget *parent)
     sch.close();
 
     //날씨 프로세스 실행
-    QProcess::execute("weather.exe");
+    QProcess::execute("../weather/weather");
 
     //날씨 표시
-    QFile w("weather.txt");
+    QFile w("../weather/weather.txt");
 
     if(!w.open(QFile::ReadOnly | QFile::Text)){
         qDebug("could not open wheather");
@@ -99,8 +111,8 @@ UI::UI(QWidget *parent)
     else{
         QTextStream weathertext(&w);
         QString weather=weathertext.readLine();
-        /*QTextCodec *codec = QTextCodec::codecForLocale();    QT 5 가능
-        QString strUnicodeLine = codec->toUnicode( weather.toLocal8Bit() );*/
+        QTextCodec *codec = QTextCodec::codecForLocale();   // QT 5 가능
+        QString strUnicodeLine = codec->toUnicode( weather.toLocal8Bit() );
 
         ui->WeatherLabel->setText(weather);
     }
@@ -119,7 +131,8 @@ void UI::MirrorMode(){       //거울모드 메소드
     this->close();
     MirrorButton2->move(0,0);
     MirrorButton2->resize(1024,600);
-    MirrorButton2->setStyleSheet("background:black");
+    MirrorButton2->setWindowFlag(Qt::FramelessWindowHint);
+
     MirrorButton2->show();
     //모니터 전원 끄기
 }
@@ -143,10 +156,10 @@ void UI::AirOnOff(){
 void UI::FanOnOff(){
     if(ui->FanButton->text()=="On"){
         ui->FanButton->setText("Off");
-        //에어컨 off 기능 추가요망
+        QProcess::execute("");
     }else{
         ui->FanButton->setText("On");
-        // 에어컨 on 기능 추가요망
+        QProcess::execute("");
     }
 }
 

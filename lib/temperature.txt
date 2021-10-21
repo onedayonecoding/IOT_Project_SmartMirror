@@ -1,2 +1,1 @@
-fasfas 10.01  20.12
-10.26
+temperature = 20.34

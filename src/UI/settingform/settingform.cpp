@@ -1,4 +1,4 @@
-#include "settingform.h"
+#include "../../inc/settingform.h"
 #include "ui_settingform.h"
 #include "../../inc/ui.h"
 
@@ -31,8 +31,8 @@ SettingForm::~SettingForm()
 
 void SettingForm::settingclose(){
     openui=new UI;
-    this->close();
+
     openui->show();
-    openui->move(0,0);
-    openui->setStyleSheet("background:gray");
+
+    this->close();
 }

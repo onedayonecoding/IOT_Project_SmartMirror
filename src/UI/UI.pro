@@ -18,9 +18,9 @@ SOURCES += \
 
 HEADERS += \
     ../inc/ui.h \
-    DateTimeWidget/DateTimeWidget.h \
-    settingform/settingform.h\
-    schedule/schedule.h
+    ../inc/DateTimeWidget.h \
+    ../inc/settingform.h\
+    ../inc/schedule.h
 
 FORMS += \
     settingform/settingform.ui \
@@ -37,5 +37,3 @@ else: unix:!android: target.path = /opt/$${TARGET}/bin
 RESOURCES += \
     images.qrc
 
-DISTFILES += \
-    ../weather.py

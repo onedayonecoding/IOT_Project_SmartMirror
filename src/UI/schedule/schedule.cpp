@@ -1,9 +1,10 @@
-#include "schedule.h"
+#include "../../inc/schedule.h"
 #include "ui_schedule.h"
 #include "../../inc/ui.h"
 
 #include <QFile>
 #include <QPushButton>
+#include <QTextStream>
 
 using namespace std;
 
@@ -12,6 +13,8 @@ Schedule::Schedule(QWidget *parent)
     , ui(new Ui::Schedule)
 {
     ui->setupUi(this);
+
+
     QString css = QString("color : white");
     ui->pushButton->setStyleSheet(css);
     setStyleSheet("background:gray");
@@ -22,6 +25,7 @@ Schedule::Schedule(QWidget *parent)
 Schedule::~Schedule()
 {
     delete ui;
+    if(openui) delete openui;
 }
 
 
@@ -45,6 +49,7 @@ void Schedule::on_calendarWidget_clicked(const QDate &date)
 
     connect(ok,SIGNAL(clicked()),SLOT(MakeFile()));
     connect(ok,SIGNAL(clicked()),sch,SLOT(close()));
+    connect(ok,SIGNAL(clicked()),this,SLOT(close()));
 }
 
 void Schedule::MakeFile(){
@@ -60,14 +65,11 @@ void Schedule::MakeFile(){
 
     openui=new UI;
     openui->show();
-    openui->move(0,0);
-    openui->setStyleSheet("background:gray");
+
 }
 
 void Schedule::cancle(){
     openui=new UI;
     openui->show();
-    openui->move(0,0);
-    openui->setStyleSheet("background:gray");
     this->close();
 }

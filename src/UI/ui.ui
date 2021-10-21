@@ -69,6 +69,9 @@
      <pointsize>20</pointsize>
     </font>
    </property>
+   <property name="styleSheet">
+    <string notr="true"/>
+   </property>
    <property name="text">
     <string>음성인식</string>
    </property>
@@ -102,6 +105,9 @@
         <family>HY헤드라인M</family>
         <pointsize>20</pointsize>
        </font>
+      </property>
+      <property name="styleSheet">
+       <string notr="true"/>
       </property>
       <property name="text">
        <string>거울모드</string>
@@ -302,7 +308,7 @@
      <number>5</number>
     </property>
     <item>
-     <widget class="QPushButton" name="pushButton_4">
+     <widget class="QPushButton" name="MindButton">
       <property name="font">
        <font>
         <family>HY헤드라인M</family>
