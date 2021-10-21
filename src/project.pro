@@ -10,15 +10,26 @@ CONFIG += c++11
 
 SOURCES += \
     main.cpp \
-    UI/ui.cpp
+    UI/ui.cpp\
+    UI/DateTimeWidget/DateTimeWidget.cpp\
+    UI/schedule/schedule.cpp\
+    UI/settingform/settingform.cpp
 
 HEADERS += \
-    inc/ui.h
+    inc/ui.h\
+    inc/DateTimeWidget.h\
+    inc/schedule.h\
+    inc/settingform.h
 
 FORMS += \
-    UI/ui.ui
+    UI/ui.ui\
+    UI/settingform/settingform.ui\
+    UI/schedule/schedule.ui
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin
 else: unix:!android: target.path = /opt/$${TARGET}/bin
 !isEmpty(target.path): INSTALLS += target
+
+RESOURCES +=\
+    UI/images.qrc

@@ -13,6 +13,9 @@
   <property name="cursor">
    <cursorShape>ArrowCursor</cursorShape>
   </property>
+  <property name="focusPolicy">
+   <enum>Qt::StrongFocus</enum>
+  </property>
   <property name="windowTitle">
    <string>UI</string>
   </property>
@@ -30,6 +33,9 @@
      <family>HY헤드라인M</family>
      <pointsize>20</pointsize>
     </font>
+   </property>
+   <property name="styleSheet">
+    <string notr="true"/>
    </property>
    <property name="text">
     <string>오늘의 날씨</string>
@@ -193,6 +199,15 @@
         <pointsize>20</pointsize>
        </font>
       </property>
+      <property name="focusPolicy">
+       <enum>Qt::NoFocus</enum>
+      </property>
+      <property name="autoFillBackground">
+       <bool>false</bool>
+      </property>
+      <property name="styleSheet">
+       <string notr="true"/>
+      </property>
       <property name="text">
        <string>On</string>
       </property>
@@ -218,6 +233,9 @@
         <family>HY헤드라인M</family>
         <pointsize>20</pointsize>
        </font>
+      </property>
+      <property name="styleSheet">
+       <string notr="true"/>
       </property>
       <property name="text">
        <string>Off</string>
@@ -327,6 +345,12 @@
         <family>HY헤드라인M</family>
         <pointsize>20</pointsize>
        </font>
+      </property>
+      <property name="autoFillBackground">
+       <bool>true</bool>
+      </property>
+      <property name="styleSheet">
+       <string notr="true"/>
       </property>
       <property name="text">
        <string>기능2 버튼</string>

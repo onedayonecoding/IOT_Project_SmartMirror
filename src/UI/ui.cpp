@@ -27,21 +27,21 @@ UI::UI(QWidget *parent)
 
     // 글씨 흰색으로 변환
     QString css = QString("color : #fffff1");
-    ui->MirrorButton1->setStyleSheet(css);
-    ui->AirButton->setStyleSheet(css);
-    ui->FanButton->setStyleSheet(css);
     ui->ULtemperature->setStyleSheet(css);
     ui->AirLabel->setStyleSheet(css);
     ui->Fan->setStyleSheet(css);
-    ui->SchButton->setStyleSheet(css);
     ui->SchLabel->setStyleSheet(css);
     ui->WLabel->setStyleSheet(css);
     ui->WeatherLabel->setStyleSheet(css);
 
-
     //buttoncolor
-     css = QString("selection-background-color : #555555; color:#fffff1");
+     css = QString("background-color : #000000; color:#fffff1");
      ui->MindButton->setStyleSheet(css);
+     ui->MirrorButton1->setStyleSheet(css);
+     ui->FanButton->setStyleSheet(css);
+     ui->AirButton->setStyleSheet(css);
+     ui->SchButton->setStyleSheet(css);
+
 
 
 
@@ -106,12 +106,12 @@ UI::UI(QWidget *parent)
 
     if(!w.open(QFile::ReadOnly | QFile::Text)){
         qDebug("could not open wheather");
-        exit(1);
+       exit(1);
     }
     else{
         QTextStream weathertext(&w);
         QString weather=weathertext.readLine();
-        QTextCodec *codec = QTextCodec::codecForLocale();   // QT 5 가능
+        QTextCodec *codec = QTextCodec::codecForLocale();   // QT 5  txt utf-8 encoding
         QString strUnicodeLine = codec->toUnicode( weather.toLocal8Bit() );
 
         ui->WeatherLabel->setText(weather);
@@ -156,10 +156,10 @@ void UI::AirOnOff(){
 void UI::FanOnOff(){
     if(ui->FanButton->text()=="On"){
         ui->FanButton->setText("Off");
-        QProcess::execute("");
+        QProcess::execute("motor_on");
     }else{
         ui->FanButton->setText("On");
-        QProcess::execute("");
+        QProcess::execute("motor-off");
     }
 }
 
