@@ -9,6 +9,9 @@
 #include <QProcess>
 #include <QTextStream>
 #include <QTextCodec> // QT5 가능
+#include <QTextBrowser>
+#include <QUrl>
+#include <QWebEngineView>
 
 using namespace std;
 
@@ -20,6 +23,10 @@ UI::UI(QWidget *parent)
     ui->setupUi(this);
     settingForm = new SettingForm;
     scheDule = new Schedule;
+
+
+    QUrl url("../mind/index.html");
+
 
     this->move(0,0);
     this->setStyleSheet("background:Black");
@@ -41,9 +48,6 @@ UI::UI(QWidget *parent)
      ui->FanButton->setStyleSheet(css);
      ui->AirButton->setStyleSheet(css);
      ui->SchButton->setStyleSheet(css);
-
-
-
 
     //시간 날짜 표시
     DateTimeWidget * datetimeWidget = new DateTimeWidget(this);
@@ -132,7 +136,7 @@ void UI::MirrorMode(){       //거울모드 메소드
     MirrorButton2->move(0,0);
     MirrorButton2->resize(1024,600);
     MirrorButton2->setWindowFlag(Qt::FramelessWindowHint);
-
+    MirrorButton2->setStyleSheet("background-color:black");
     MirrorButton2->show();
     //모니터 전원 끄기
 }
@@ -170,11 +174,12 @@ void UI::Setting(){
 }
 
 void UI::Sch(){
-    scheDule->show();
     scheDule->move(0,0);
+    scheDule->show();
+
     this->close();
 }
 
-
+//Qwebpageengine
 
 
