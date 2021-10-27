@@ -160,13 +160,13 @@
     <rect>
      <x>20</x>
      <y>240</y>
-     <width>279</width>
-     <height>93</height>
+     <width>231</width>
+     <height>131</height>
     </rect>
    </property>
    <layout class="QGridLayout" name="gridLayout">
-    <item row="0" column="0" rowspan="2">
-     <widget class="QLabel" name="ULtemperature">
+    <item row="1" column="0">
+     <widget class="QLabel" name="Fan">
       <property name="font">
        <font>
         <family>HY헤드라인M</family>
@@ -174,11 +174,27 @@
        </font>
       </property>
       <property name="text">
-       <string>온도</string>
+       <string>선풍기</string>
       </property>
      </widget>
     </item>
-    <item row="0" column="1">
+    <item row="1" column="1">
+     <widget class="QPushButton" name="FanButton">
+      <property name="font">
+       <font>
+        <family>HY헤드라인M</family>
+        <pointsize>20</pointsize>
+       </font>
+      </property>
+      <property name="styleSheet">
+       <string notr="true"/>
+      </property>
+      <property name="text">
+       <string>Off</string>
+      </property>
+     </widget>
+    </item>
+    <item row="0" column="0">
      <widget class="QLabel" name="AirLabel">
       <property name="font">
        <font>
@@ -191,8 +207,14 @@
       </property>
      </widget>
     </item>
-    <item row="0" column="2">
+    <item row="0" column="1">
      <widget class="QPushButton" name="AirButton">
+      <property name="sizePolicy">
+       <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
+        <horstretch>0</horstretch>
+        <verstretch>0</verstretch>
+       </sizepolicy>
+      </property>
       <property name="font">
        <font>
         <family>HY헤드라인M</family>
@@ -210,35 +232,6 @@
       </property>
       <property name="text">
        <string>On</string>
-      </property>
-     </widget>
-    </item>
-    <item row="1" column="1">
-     <widget class="QLabel" name="Fan">
-      <property name="font">
-       <font>
-        <family>HY헤드라인M</family>
-        <pointsize>20</pointsize>
-       </font>
-      </property>
-      <property name="text">
-       <string>선풍기</string>
-      </property>
-     </widget>
-    </item>
-    <item row="1" column="2">
-     <widget class="QPushButton" name="FanButton">
-      <property name="font">
-       <font>
-        <family>HY헤드라인M</family>
-        <pointsize>20</pointsize>
-       </font>
-      </property>
-      <property name="styleSheet">
-       <string notr="true"/>
-      </property>
-      <property name="text">
-       <string>Off</string>
       </property>
      </widget>
     </item>
@@ -369,6 +362,44 @@
     </rect>
    </property>
    <layout class="QVBoxLayout" name="TimeLayout"/>
+  </widget>
+  <widget class="QWidget" name="layoutWidget">
+   <property name="geometry">
+    <rect>
+     <x>20</x>
+     <y>150</y>
+     <width>231</width>
+     <height>74</height>
+    </rect>
+   </property>
+   <layout class="QVBoxLayout" name="verticalLayout">
+    <item>
+     <widget class="QLabel" name="ULtemperature">
+      <property name="font">
+       <font>
+        <family>HY헤드라인M</family>
+        <pointsize>20</pointsize>
+       </font>
+      </property>
+      <property name="text">
+       <string>온도</string>
+      </property>
+     </widget>
+    </item>
+    <item>
+     <widget class="QLabel" name="ULhumidity">
+      <property name="font">
+       <font>
+        <family>HY헤드라인M</family>
+        <pointsize>20</pointsize>
+       </font>
+      </property>
+      <property name="text">
+       <string>humi</string>
+      </property>
+     </widget>
+    </item>
+   </layout>
   </widget>
  </widget>
  <resources/>

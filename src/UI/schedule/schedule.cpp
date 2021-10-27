@@ -32,8 +32,14 @@ Schedule::~Schedule()
 void Schedule::on_calendarWidget_clicked(const QDate &date)
 {
     QString a = date.toString();
-    QString text = QString(a+"\n 일정을 쓰세요!!");
+    QString text = QString(a+"\n 일정을 쓰세요!!");    // 일정이 없을시 초기값
 
+    QString sdate=date.toString();
+    QFile h("../"+sdate+".txt");
+
+    if(h.open(QFile::ReadOnly | QFile::Text)){  //파일이 있으면 기존일정 대로
+        text=h.readAll();
+    }
     QPushButton *ok = new QPushButton(sch);
     sch->setPlainText(text);
     sch->resize(224,600);
@@ -46,10 +52,9 @@ void Schedule::on_calendarWidget_clicked(const QDate &date)
     QString css = QString("font : 20px; font : hy헤드라인m");
     ok->setStyleSheet(css);
 
-
-    connect(ok,SIGNAL(clicked()),SLOT(MakeFile()));
     connect(ok,SIGNAL(clicked()),sch,SLOT(close()));
     connect(ok,SIGNAL(clicked()),this,SLOT(close()));
+    connect(ok,SIGNAL(clicked()),SLOT(MakeFile()));
 }
 
 void Schedule::MakeFile(){
@@ -69,7 +74,9 @@ void Schedule::MakeFile(){
 }
 
 void Schedule::cancle(){
+
+    this->close();
     openui=new UI;
     openui->show();
-    this->close();
+
 }

@@ -37,7 +37,6 @@ DateTimeWidget::DateTimeWidget(QWidget *parent) : QWidget(parent)
     connect(timer,&QTimer::timeout,this,&DateTimeWidget::updateTime);
     timer->start();
 
-
 }
 
 void DateTimeWidget::updateTime()

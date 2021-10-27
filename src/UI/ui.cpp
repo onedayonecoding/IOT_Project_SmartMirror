@@ -3,6 +3,7 @@
 #include "../inc/DateTimeWidget.h"
 #include "../inc/settingform.h"
 #include "../inc/schedule.h"
+#include "../inc/ClickableLabel.h"
 
 #include <QFile>
 #include <QPushButton>
@@ -11,7 +12,7 @@
 #include <QTextCodec> // QT5 가능
 #include <QTextBrowser>
 #include <QUrl>
-#include <QWebEngineView>
+
 
 using namespace std;
 
@@ -25,9 +26,6 @@ UI::UI(QWidget *parent)
     scheDule = new Schedule;
 
 
-    QUrl url("../mind/index.html");
-
-
     this->move(0,0);
     this->setStyleSheet("background:Black");
     this->setWindowFlag(Qt::FramelessWindowHint);
@@ -35,6 +33,7 @@ UI::UI(QWidget *parent)
     // 글씨 흰색으로 변환
     QString css = QString("color : #fffff1");
     ui->ULtemperature->setStyleSheet(css);
+    ui->ULhumidity->setStyleSheet(css);
     ui->AirLabel->setStyleSheet(css);
     ui->Fan->setStyleSheet(css);
     ui->SchLabel->setStyleSheet(css);
@@ -54,28 +53,20 @@ UI::UI(QWidget *parent)
     ui->TimeLayout->addWidget(datetimeWidget);
 
     // UI 온도표시
-    QString T="0";
-    vector<QString> temp;
+    QTimer *t = new QTimer();
+    t->setInterval(1000);
+    connect(t,&QTimer::timeout,this,&UI::TempUpdate);
+    connect(t,&QTimer::timeout,this,&UI::HumiUpdate);
+    t->start();
 
-    QFile t("../../lib/temperature.txt");             // 온도 파일 열기
 
-    if(!t.open(QFile::ReadOnly | QFile::Text)){
-        qDebug("could not open temperature");
-        exit(1);
-    }else{                                              // 3번째 단어가 온도일시
-        QTextStream in(&t);
-        QString word=in.readLine();
-        //qDebug()<<word;
-        QStringList temp = word.split(" ");
-        T = temp[2];
-    }
-    t.close();                                        //온도 파일 닫기
-    QString tem=QString("%1℃").arg(T); //
-    ui->ULtemperature->setText(tem);
+
+
 
     // 거울 모드
     connect(ui->MirrorButton1,SIGNAL(clicked()),SLOT(MirrorMode()));
     connect(MirrorButton2,SIGNAL(clicked()),SLOT(MirrorModeClose()));
+
 
     // 선풍기, 에어컨 온오프
     connect(ui->AirButton,SIGNAL(clicked()),SLOT(AirOnOff()));
@@ -122,6 +113,9 @@ UI::UI(QWidget *parent)
     }
     w.close();
 
+    //mind
+    connect(ui->MindButton,SIGNAL(clicked()),SLOT(Web()));
+
 }
 
 UI::~UI()
@@ -147,6 +141,7 @@ void UI::MirrorModeClose(){
     //모니터 전원 켜기
 }
 
+
 void UI::AirOnOff(){
     if(ui->AirButton->text()=="On"){
         ui->AirButton->setText("Off");
@@ -160,11 +155,14 @@ void UI::AirOnOff(){
 void UI::FanOnOff(){
     if(ui->FanButton->text()=="On"){
         ui->FanButton->setText("Off");
-        QProcess::execute("motor_on");
+        QProcess::execute("../../lib/motor/motor_on");
+        qDebug("on");
     }else{
         ui->FanButton->setText("On");
-        QProcess::execute("motor-off");
+        QProcess::execute("../../lib/motor/motor_off");
+        qDebug("off");
     }
+
 }
 
 void UI::Setting(){
@@ -181,5 +179,49 @@ void UI::Sch(){
 }
 
 //Qwebpageengine
+void UI::Web(){
+    QProcess::execute("../../lib/Web/dist/web/web");
+}
 
 
+void UI::TempUpdate(){
+    QString T="0";
+    vector<QString> temp;
+
+    QFile t("../../lib/Temperature/Temperature.txt");             // 온도 파일 열기
+
+    if(!t.open(QFile::ReadOnly | QFile::Text)){
+        qDebug("could not open temperature");
+        exit(1);
+    }else{                                              // 3번째 단어가 온도일시
+        QTextStream in(&t);
+        QString word=in.readLine();
+        //qDebug()<<word;
+        QStringList temp = word.split(" ");
+        T = temp[2];
+    }
+    t.close();                                        //온도 파일 닫기
+    QString tem=QString("실내온도 : %1℃").arg(T); //
+    ui->ULtemperature->setText(tem);
+}
+
+void UI::HumiUpdate(){
+    QString T="0";
+    vector<QString> temp;
+    QFile h("../../lib/Humidity/Humidity.txt");            //  파일 열기
+
+    if(!h.open(QFile::ReadOnly | QFile::Text)){
+        qDebug("could not open temperature");
+        exit(1);
+    }else{                                              // 3번째 단어가 온도일시
+        QTextStream in(&h);
+        QString word=in.readLine();
+        //qDebug()<<word;
+        QStringList temp = word.split(" ");
+        T = temp[2];
+    }
+    h.close();                                        //온도 파일 닫기
+    QString hum=QString("실내습도 : %1").arg(T); //
+    ui->ULhumidity->setText(hum);
+
+}

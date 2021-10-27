@@ -1,10 +1,13 @@
 #ifndef UI_H
 #define UI_H
 
+#include"../inc/ClickableLabel.h"
+
 #include <QWidget>
-#include <QPushButton>  //추후 메모리 문제로 고민 필요
+#include <QLabel>  //추후 메모리 문제로 고민 필요
 #include <QProcess>
 #include <QTextBrowser>
+
 
 
 class SettingForm;
@@ -25,6 +28,7 @@ public:
     Ui::UI *ui;
 
 
+
 public slots:
     void MirrorMode();
     void MirrorModeClose();
@@ -32,15 +36,19 @@ public slots:
     void FanOnOff();
     void Setting();
     void Sch();
+    void Web();
+    void TempUpdate();
+    void HumiUpdate();
 
 
 private:
-
-    QPushButton *MirrorButton2=new QPushButton();   //거울모드 버튼
+    ClickableLabel *MirrorButton2=new ClickableLabel();   //거울모드 버튼
     SettingForm* settingForm;
     Schedule* scheDule;
     QProcess *process;
     //QTextBrowser *textBrowser;
+
+
 
 
 };

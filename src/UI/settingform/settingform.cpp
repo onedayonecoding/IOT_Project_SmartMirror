@@ -31,8 +31,9 @@ SettingForm::~SettingForm()
 
 void SettingForm::settingclose(){
     openui=new UI;
+    this->close();
 
     openui->show();
 
-    this->close();
+
 }

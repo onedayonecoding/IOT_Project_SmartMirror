@@ -13,13 +13,15 @@ SOURCES += \
     UI/ui.cpp\
     UI/DateTimeWidget/DateTimeWidget.cpp\
     UI/schedule/schedule.cpp\
-    UI/settingform/settingform.cpp
+    UI/settingform/settingform.cpp \
+    clickablelabel.cpp
 
 HEADERS += \
     inc/ui.h\
     inc/DateTimeWidget.h\
     inc/schedule.h\
-    inc/settingform.h
+    inc/settingform.h \
+    inc/ClickableLabel.h
 
 FORMS += \
     UI/ui.ui\
