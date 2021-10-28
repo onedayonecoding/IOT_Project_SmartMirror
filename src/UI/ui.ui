@@ -60,7 +60,7 @@
     <string>날씨 그림</string>
    </property>
   </widget>
-  <widget class="QPushButton" name="pushButton_3">
+  <widget class="QPushButton" name="VoiceButton">
    <property name="geometry">
     <rect>
      <x>410</x>
@@ -190,7 +190,7 @@
        <string notr="true"/>
       </property>
       <property name="text">
-       <string>Off</string>
+       <string>On</string>
       </property>
      </widget>
     </item>
@@ -368,8 +368,8 @@
     <rect>
      <x>20</x>
      <y>150</y>
-     <width>231</width>
-     <height>74</height>
+     <width>261</width>
+     <height>75</height>
     </rect>
    </property>
    <layout class="QVBoxLayout" name="verticalLayout">
@@ -400,6 +400,28 @@
      </widget>
     </item>
    </layout>
+  </widget>
+  <widget class="QPushButton" name="QuitButton">
+   <property name="geometry">
+    <rect>
+     <x>20</x>
+     <y>60</y>
+     <width>171</width>
+     <height>71</height>
+    </rect>
+   </property>
+   <property name="font">
+    <font>
+     <family>HY헤드라인M</family>
+     <pointsize>20</pointsize>
+    </font>
+   </property>
+   <property name="styleSheet">
+    <string notr="true"/>
+   </property>
+   <property name="text">
+    <string>Quit</string>
+   </property>
   </widget>
  </widget>
  <resources/>

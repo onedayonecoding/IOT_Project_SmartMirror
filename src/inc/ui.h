@@ -7,11 +7,12 @@
 #include <QLabel>  //추후 메모리 문제로 고민 필요
 #include <QProcess>
 #include <QTextBrowser>
-
+#include <QTimer>
 
 
 class SettingForm;
 class Schedule;
+
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class UI; }
@@ -24,14 +25,14 @@ class UI : public QWidget
 public:
     UI(QWidget *parent = nullptr);
     ~UI();
-    //void ExecuteProgram();
-    Ui::UI *ui;
 
+    Ui::UI *ui;
+    QTimer *VT = new QTimer();
+    QLabel *Vmessage = new QLabel();
 
 
 public slots:
     void MirrorMode();
-    void MirrorModeClose();
     void AirOnOff();
     void FanOnOff();
     void Setting();
@@ -39,6 +40,9 @@ public slots:
     void Web();
     void TempUpdate();
     void HumiUpdate();
+    void Voice();
+    void VoiceUpdate();
+    void VoiceCommand();
 
 
 private:
@@ -46,10 +50,6 @@ private:
     SettingForm* settingForm;
     Schedule* scheDule;
     QProcess *process;
-    //QTextBrowser *textBrowser;
-
-
-
 
 };
 #endif // UI_H

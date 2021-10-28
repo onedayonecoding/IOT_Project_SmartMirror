@@ -1,1 +1,1 @@
-Temperature = 17.2
+Temperature = 31.48°C

@@ -14,18 +14,19 @@ Schedule::Schedule(QWidget *parent)
 {
     ui->setupUi(this);
 
-
+    this->setWindowFlag(Qt::FramelessWindowHint);
     QString css = QString("color : white");
     ui->pushButton->setStyleSheet(css);
     setStyleSheet("background:gray");
 
     connect(ui->pushButton,SIGNAL(clicked()),SLOT(cancle()));
+
 }
 
 Schedule::~Schedule()
 {
     delete ui;
-    if(openui) delete openui;
+    //if(openui) delete openui;
 }
 
 
@@ -47,6 +48,8 @@ void Schedule::on_calendarWidget_clicked(const QDate &date)
     ok->setText("완 료");
     ok->move(0,400);
     ok->resize(224,200);
+
+    sch->setWindowFlag(Qt::FramelessWindowHint);
     sch->show();
 
     QString css = QString("font : 20px; font : hy헤드라인m");
@@ -58,6 +61,8 @@ void Schedule::on_calendarWidget_clicked(const QDate &date)
 }
 
 void Schedule::MakeFile(){
+    openui=new UI;
+
     QDate date = ui->calendarWidget->selectedDate();
     QString sdate=date.toString();
     QFile makefile("../"+sdate+".txt");
@@ -68,13 +73,11 @@ void Schedule::MakeFile(){
     SaveFile<<schtext;
     makefile.close();
 
-    openui=new UI;
+
     openui->show();
 
 }
-
 void Schedule::cancle(){
-
     this->close();
     openui=new UI;
     openui->show();

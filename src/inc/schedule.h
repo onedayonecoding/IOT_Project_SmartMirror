@@ -7,6 +7,7 @@
 QT_BEGIN_NAMESPACE
 class UI;
 namespace Ui { class Schedule;
+
              }
 QT_END_NAMESPACE
 
@@ -18,6 +19,7 @@ public:
     explicit Schedule(QWidget *parent = nullptr);
     ~Schedule();
     Ui::Schedule *ui;
+
     QTextEdit *sch=new QTextEdit();
 
 public slots:
@@ -25,7 +27,8 @@ public slots:
    void cancle();
 
 private:
-   UI *openui;
+    UI *openui;
+
 
 private slots:
    void on_calendarWidget_clicked(const QDate &date);
