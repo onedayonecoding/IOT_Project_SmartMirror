@@ -96,60 +96,15 @@ UI::UI(QWidget *parent)
     }
     sch.close();
 
+
+
     //날씨 프로세스 실행
-
-
-    //날씨 표시
-    QFile w("weather/weather.txt");
-
-    if(!w.open(QFile::ReadOnly | QFile::Text)){
-        qDebug("could not open wheather");
-       exit(1);
-    }
-    else{
-        QTextStream weathertext(&w);
-        QString weather=weathertext.readAll();
-        QStringList temp = weather.split("\n");
-        QString w = temp[0];
-        QString t = temp[1];
-        QTextCodec *codec = QTextCodec::codecForLocale();   // QT 5  txt utf-8 encoding
-        QString strUnicodeLine = codec->toUnicode( w.toLocal8Bit() );
-
-        w_img[0].load(":/images/cloud.png");
-        w_img[1].load(":/images/rain.png");
-        w_img[2].load(":/images/snow.png");
-        w_img[3].load(":/images/sun.png");
-        w_img[4].load(":/images/cloudy.png");
-        ui->WLabel->setText(w);
-        ui->WLabel_T->setText(t);
-        if(w=="현재날씨 : 흐림"){
-            qDebug("흐림ｔ（");
-            int w = 75;  //ui->Wimage->width();
-            int h = 75;  //ui->Wimage->height();
-            ui->Wimage->setPixmap(w_img[0].scaled(w,h,Qt::KeepAspectRatio));
-        }else if(w=="현재날씨 : 비"||w=="현재날씨 : 약한비"||w=="현재날씨 : 강한비"){
-            qDebug("비");
-            int w = 75;  //ui->Wimage->width();
-            int h = 75;  //ui->Wimage->height();
-            ui->Wimage->setPixmap(w_img[1].scaled(w,h,Qt::KeepAspectRatio));
-        }else if(w=="현재날씨 : 눈"||w=="현재날씨 : 약한눈"||w=="현재날씨 : 강한눈"||w=="현재날씨 : 진눈깨비"||w=="현재날씨 : 소낙눈"){
-            qDebug("눈");
-            int w = 75;  //ui->Wimage->width();
-            int h = 75;  //ui->Wimage->height();
-            ui->Wimage->setPixmap(w_img[2].scaled(w,h,Qt::KeepAspectRatio));
-        }else if(w=="현재날씨 : 맑음"||w=="현재날씨 : 구름조금"){
-            qDebug("맑음");
-            int w = 75;  //ui->Wimage->width();
-            int h = 75;  //ui->Wimage->height();
-            ui->Wimage->setPixmap(w_img[3].scaled(w,h,Qt::KeepAspectRatio));
-        }else if(w=="현재날씨 : 구름많음"){
-            qDebug("구름많음");
-            int w = 75;  //ui->Wimage->width();
-            int h = 75;  //ui->Wimage->height();
-            ui->Wimage->setPixmap(w_img[4].scaled(w,h,Qt::KeepAspectRatio));
-        }
-    }
-    w.close();
+    Weathershow();
+    QTimer* weathertime = new QTimer();
+    weathertime->setInterval(3000000);
+    connect(weathertime,&QTimer::timeout,this,&UI::WeatherProcess);
+    connect(weathertime,&QTimer::timeout,this,&UI::Weathershow);
+    weathertime->start(); // 30분 뒤 타이머 시작
 
 
     //감정인식 웹사이트 실행
@@ -158,7 +113,6 @@ UI::UI(QWidget *parent)
     //음성인식
     connect(ui->VoiceButton,SIGNAL(clicked()),SLOT(Voice()));
     connect(ui->QuitButton,SIGNAL(clicked()),SLOT(close()));
-
 }
 
 //생성자
@@ -173,7 +127,6 @@ UI::~UI()
 //기능 메소드 작성 시작
 
 void UI::SetAlarm(){
-
     if(alarmnum==0){
         alarm->show();
         alarmnum=1;
@@ -183,7 +136,6 @@ void UI::SetAlarm(){
         qDebug("alarmoff");
         alarmnum=0;
     }
-
 }
 
 void UI::MirrorMode(){       //거울모드 메소드
@@ -366,4 +318,67 @@ void UI::VoiceCommand(){
 
         }
     }
+}
+
+void UI::WeatherProcess(){
+    QProcess::execute("../function/weather/dist/weather");
+}
+
+void UI::Weathershow(){
+    qDebug("weather show");
+    //날씨 표시
+    QFile w("weather.txt");
+
+    if(!w.open(QFile::ReadOnly | QFile::Text)){
+        qDebug("could not open wheather");
+       exit(1);
+    }
+    else{
+        QTextStream weathertext(&w);
+        QString weather=weathertext.readAll();
+        QStringList temp = weather.split("\n");
+        QString w = temp[0];
+        QString t = temp[1];
+        QTextCodec *codec = QTextCodec::codecForLocale();   // QT 5  txt utf-8 encoding
+        QString strUnicodeLine = codec->toUnicode( w.toLocal8Bit() );
+
+        w_img[0].load(":/images/cloud.png");
+        w_img[1].load(":/images/rain.png");
+        w_img[2].load(":/images/snow.png");
+        w_img[3].load(":/images/sun.png");
+        w_img[4].load(":/images/cloudy.png");
+        ui->WLabel->setText(w);
+        ui->WLabel_T->setText(t);
+        if(w=="현재날씨 : 흐림"){
+            qDebug("흐림ｔ（");
+            int w = 75;  //ui->Wimage->width();
+            int h = 75;  //ui->Wimage->height();
+            ui->Wimage->setPixmap(w_img[0].scaled(w,h,Qt::KeepAspectRatio));
+        }else if(w=="현재날씨 : 비"||w=="현재날씨 : 약한비"||w=="현재날씨 : 강한비"){
+            qDebug("비");
+            int w = 75;  //ui->Wimage->width();
+            int h = 75;  //ui->Wimage->height();
+            ui->Wimage->setPixmap(w_img[1].scaled(w,h,Qt::KeepAspectRatio));
+        }else if(w=="현재날씨 : 눈"||w=="현재날씨 : 약한눈"||w=="현재날씨 : 강한눈"||w=="현재날씨 : 진눈깨비"||w=="현재날씨 : 소낙눈"){
+            qDebug("눈");
+            int w = 75;  //ui->Wimage->width();
+            int h = 75;  //ui->Wimage->height();
+            ui->Wimage->setPixmap(w_img[2].scaled(w,h,Qt::KeepAspectRatio));
+        }else if(w=="현재날씨 : 맑음"||w=="현재날씨 : 구름조금"){
+            qDebug("맑음");
+            int w = 75;  //ui->Wimage->width();
+            int h = 75;  //ui->Wimage->height();
+            ui->Wimage->setPixmap(w_img[3].scaled(w,h,Qt::KeepAspectRatio));
+        }else if(w=="현재날씨 : 구름많음"){
+            qDebug("구름많음");
+            int w = 75;  //ui->Wimage->width();
+            int h = 75;  //ui->Wimage->height();
+            ui->Wimage->setPixmap(w_img[4].scaled(w,h,Qt::KeepAspectRatio));
+        }
+    }
+    w.close();
+}
+
+void UI::Google(){
+   QProcess::execute("");
 }

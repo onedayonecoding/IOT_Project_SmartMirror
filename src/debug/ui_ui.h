@@ -56,6 +56,7 @@ public:
     QLabel *WLabel;
     QLabel *WLabel_T;
     QLabel *Wimage;
+    QPushButton *VoiceButton_2;
 
     void setupUi(QWidget *UI)
     {
@@ -66,7 +67,7 @@ public:
         UI->setFocusPolicy(Qt::StrongFocus);
         VoiceButton = new QPushButton(UI);
         VoiceButton->setObjectName(QStringLiteral("VoiceButton"));
-        VoiceButton->setGeometry(QRect(410, 380, 171, 71));
+        VoiceButton->setGeometry(QRect(410, 430, 171, 71));
         QFont font;
         font.setFamily(QString::fromUtf8("HY\355\227\244\353\223\234\353\235\274\354\235\270M"));
         font.setPointSize(20);
@@ -247,6 +248,11 @@ public:
 
         horizontalLayout_2->addWidget(Wimage);
 
+        VoiceButton_2 = new QPushButton(UI);
+        VoiceButton_2->setObjectName(QStringLiteral("VoiceButton_2"));
+        VoiceButton_2->setGeometry(QRect(410, 350, 171, 71));
+        VoiceButton_2->setFont(font);
+        VoiceButton_2->setStyleSheet(QStringLiteral(""));
 
         retranslateUi(UI);
 
@@ -272,6 +278,7 @@ public:
         WLabel->setText(QApplication::translate("UI", "\354\230\244\353\212\230\354\235\230 \353\202\240\354\224\250", nullptr));
         WLabel_T->setText(QApplication::translate("UI", "\354\231\270\353\266\200 \354\230\250\353\217\204", nullptr));
         Wimage->setText(QApplication::translate("UI", "\353\202\240\354\224\250\354\202\254\354\247\204", nullptr));
+        VoiceButton_2->setText(QApplication::translate("UI", "google", nullptr));
     } // retranslateUi
 
 };

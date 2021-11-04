@@ -46,6 +46,9 @@ public slots:
     void VoiceUpdate();
     void VoiceCommand();
     void SetAlarm();
+    void WeatherProcess();
+    void Weathershow();
+    void Google();
 
 private:
 

@@ -23,7 +23,7 @@
    <property name="geometry">
     <rect>
      <x>410</x>
-     <y>380</y>
+     <y>430</y>
      <width>171</width>
      <height>71</height>
     </rect>
@@ -454,6 +454,28 @@
      </widget>
     </item>
    </layout>
+  </widget>
+  <widget class="QPushButton" name="VoiceButton_2">
+   <property name="geometry">
+    <rect>
+     <x>410</x>
+     <y>350</y>
+     <width>171</width>
+     <height>71</height>
+    </rect>
+   </property>
+   <property name="font">
+    <font>
+     <family>HY헤드라인M</family>
+     <pointsize>20</pointsize>
+    </font>
+   </property>
+   <property name="styleSheet">
+    <string notr="true"/>
+   </property>
+   <property name="text">
+    <string>google</string>
+   </property>
   </widget>
  </widget>
  <resources/>

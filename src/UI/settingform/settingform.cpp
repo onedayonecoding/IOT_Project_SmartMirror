@@ -30,6 +30,7 @@ SettingForm::SettingForm(QWidget *parent) :
     QTimer *a = new QTimer();
     a->setInterval(2000);
     connect(a,&QTimer::timeout,this,&SettingForm::detect);
+    connect(a,&QTimer::timeout,this,&SettingForm::autoair);
     a->start(); //타이머 시작
 }
 
@@ -76,9 +77,24 @@ void SettingForm::detect(){
     }
 }
 void SettingForm::autoair(){
+    QFile air("senser/Air.txt");
+    QTextStream Airtext(&air);
+
+    if(!air.open(QFile::ReadWrite | QFile::Text)){
+        qDebug("could not open Airfile");
+        exit(1);
+    }
+    QString word=Airtext.readLine();
+
     if(ui->onoff2->value()==0){
-        qDebug("off");
+        if(word=="auto"){
+            Airtext<<"off";
+        }
+
     }else{
-        qDebug("on");
+        if(word=="on"||word=="off"){
+            Airtext<<"auto";
+            qDebug("air auto on");
+        }
     }
 }
