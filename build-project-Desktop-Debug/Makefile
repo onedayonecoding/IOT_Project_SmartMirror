@@ -55,24 +55,28 @@ SOURCES       = ../src/main.cpp \
 		../src/UI/DateTimeWidget/DateTimeWidget.cpp \
 		../src/UI/schedule/schedule.cpp \
 		../src/UI/settingform/settingform.cpp \
-		../src/clickablelabel.cpp qrc_images.cpp \
+		../src/clickablelabel.cpp \
+		../src/UI/alarm/alarm.cpp qrc_images.cpp \
 		moc_ui.cpp \
 		moc_DateTimeWidget.cpp \
 		moc_schedule.cpp \
 		moc_settingform.cpp \
-		moc_ClickableLabel.cpp
+		moc_ClickableLabel.cpp \
+		moc_alarm.cpp
 OBJECTS       = main.o \
 		ui.o \
 		DateTimeWidget.o \
 		schedule.o \
 		settingform.o \
 		clickablelabel.o \
+		alarm.o \
 		qrc_images.o \
 		moc_ui.o \
 		moc_DateTimeWidget.o \
 		moc_schedule.o \
 		moc_settingform.o \
-		moc_ClickableLabel.o
+		moc_ClickableLabel.o \
+		moc_alarm.o
 DIST          = /usr/lib/arm-linux-gnueabihf/qt5/mkspecs/features/spec_pre.prf \
 		/usr/lib/arm-linux-gnueabihf/qt5/mkspecs/common/unix.conf \
 		/usr/lib/arm-linux-gnueabihf/qt5/mkspecs/common/linux.conf \
@@ -156,16 +160,18 @@ DIST          = /usr/lib/arm-linux-gnueabihf/qt5/mkspecs/features/spec_pre.prf \
 		/usr/lib/arm-linux-gnueabihf/qt5/mkspecs/features/exceptions.prf \
 		/usr/lib/arm-linux-gnueabihf/qt5/mkspecs/features/yacc.prf \
 		/usr/lib/arm-linux-gnueabihf/qt5/mkspecs/features/lex.prf \
-		../src/project.pro ../src/inc/ui.h \
-		../src/inc/DateTimeWidget.h \
-		../src/inc/schedule.h \
-		../src/inc/settingform.h \
-		../src/inc/ClickableLabel.h ../src/main.cpp \
+		../src/project.pro ../src/header/ui.h \
+		../src/header/DateTimeWidget.h \
+		../src/header/schedule.h \
+		../src/header/settingform.h \
+		../src/header/ClickableLabel.h \
+		../src/header/alarm.h ../src/main.cpp \
 		../src/UI/ui.cpp \
 		../src/UI/DateTimeWidget/DateTimeWidget.cpp \
 		../src/UI/schedule/schedule.cpp \
 		../src/UI/settingform/settingform.cpp \
-		../src/clickablelabel.cpp
+		../src/clickablelabel.cpp \
+		../src/UI/alarm/alarm.cpp
 QMAKE_TARGET  = project
 DESTDIR       = 
 TARGET        = project
@@ -370,8 +376,8 @@ distdir: FORCE
 	$(COPY_FILE) --parents $(DIST) $(DISTDIR)/
 	$(COPY_FILE) --parents ../src/UI/images.qrc $(DISTDIR)/
 	$(COPY_FILE) --parents /usr/lib/arm-linux-gnueabihf/qt5/mkspecs/features/data/dummy.cpp $(DISTDIR)/
-	$(COPY_FILE) --parents ../src/inc/ui.h ../src/inc/DateTimeWidget.h ../src/inc/schedule.h ../src/inc/settingform.h ../src/inc/ClickableLabel.h $(DISTDIR)/
-	$(COPY_FILE) --parents ../src/main.cpp ../src/UI/ui.cpp ../src/UI/DateTimeWidget/DateTimeWidget.cpp ../src/UI/schedule/schedule.cpp ../src/UI/settingform/settingform.cpp ../src/clickablelabel.cpp $(DISTDIR)/
+	$(COPY_FILE) --parents ../src/header/ui.h ../src/header/DateTimeWidget.h ../src/header/schedule.h ../src/header/settingform.h ../src/header/ClickableLabel.h ../src/header/alarm.h $(DISTDIR)/
+	$(COPY_FILE) --parents ../src/main.cpp ../src/UI/ui.cpp ../src/UI/DateTimeWidget/DateTimeWidget.cpp ../src/UI/schedule/schedule.cpp ../src/UI/settingform/settingform.cpp ../src/clickablelabel.cpp ../src/UI/alarm/alarm.cpp $(DISTDIR)/
 	$(COPY_FILE) --parents ../src/UI/ui.ui ../src/UI/settingform/settingform.ui ../src/UI/schedule/schedule.ui $(DISTDIR)/
 
 
@@ -401,7 +407,12 @@ compiler_rcc_clean:
 	-$(DEL_FILE) qrc_images.cpp
 qrc_images.cpp: ../src/UI/images.qrc \
 		/usr/lib/qt5/bin/rcc \
-		../src/UI/images/setting.png
+		../src/UI/images/snow.png \
+		../src/UI/images/cloudy.png \
+		../src/UI/images/setting.png \
+		../src/UI/images/sun.png \
+		../src/UI/images/cloud.png \
+		../src/UI/images/rain.png
 	/usr/lib/qt5/bin/rcc -name images ../src/UI/images.qrc -o qrc_images.cpp
 
 compiler_moc_predefs_make_all: moc_predefs.h
@@ -410,34 +421,40 @@ compiler_moc_predefs_clean:
 moc_predefs.h: /usr/lib/arm-linux-gnueabihf/qt5/mkspecs/features/data/dummy.cpp
 	g++ -pipe -g -std=gnu++11 -Wall -W -dM -E -o moc_predefs.h /usr/lib/arm-linux-gnueabihf/qt5/mkspecs/features/data/dummy.cpp
 
-compiler_moc_header_make_all: moc_ui.cpp moc_DateTimeWidget.cpp moc_schedule.cpp moc_settingform.cpp moc_ClickableLabel.cpp
+compiler_moc_header_make_all: moc_ui.cpp moc_DateTimeWidget.cpp moc_schedule.cpp moc_settingform.cpp moc_ClickableLabel.cpp moc_alarm.cpp
 compiler_moc_header_clean:
-	-$(DEL_FILE) moc_ui.cpp moc_DateTimeWidget.cpp moc_schedule.cpp moc_settingform.cpp moc_ClickableLabel.cpp
-moc_ui.cpp: ../src/inc/ClickableLabel.h \
-		../src/inc/ui.h \
+	-$(DEL_FILE) moc_ui.cpp moc_DateTimeWidget.cpp moc_schedule.cpp moc_settingform.cpp moc_ClickableLabel.cpp moc_alarm.cpp
+moc_ui.cpp: ../src/header/ClickableLabel.h \
+		../src/header/alarm.h \
+		../src/header/ui.h \
 		moc_predefs.h \
 		/usr/lib/qt5/bin/moc
-	/usr/lib/qt5/bin/moc $(DEFINES) --include /home/pi/project/build-project-Desktop-Debug/moc_predefs.h -I/usr/lib/arm-linux-gnueabihf/qt5/mkspecs/linux-g++ -I/home/pi/project/src -I/usr/include/arm-linux-gnueabihf/qt5 -I/usr/include/arm-linux-gnueabihf/qt5/QtWidgets -I/usr/include/arm-linux-gnueabihf/qt5/QtGui -I/usr/include/arm-linux-gnueabihf/qt5/QtCore -I. -I/usr/include/c++/8 -I/usr/include/arm-linux-gnueabihf/c++/8 -I/usr/include/c++/8/backward -I/usr/lib/gcc/arm-linux-gnueabihf/8/include -I/usr/local/include -I/usr/lib/gcc/arm-linux-gnueabihf/8/include-fixed -I/usr/include/arm-linux-gnueabihf -I/usr/include ../src/inc/ui.h -o moc_ui.cpp
+	/usr/lib/qt5/bin/moc $(DEFINES) --include /home/pi/project/build-project-Desktop-Debug/moc_predefs.h -I/usr/lib/arm-linux-gnueabihf/qt5/mkspecs/linux-g++ -I/home/pi/project/src -I/usr/include/arm-linux-gnueabihf/qt5 -I/usr/include/arm-linux-gnueabihf/qt5/QtWidgets -I/usr/include/arm-linux-gnueabihf/qt5/QtGui -I/usr/include/arm-linux-gnueabihf/qt5/QtCore -I. -I/usr/include/c++/8 -I/usr/include/arm-linux-gnueabihf/c++/8 -I/usr/include/c++/8/backward -I/usr/lib/gcc/arm-linux-gnueabihf/8/include -I/usr/local/include -I/usr/lib/gcc/arm-linux-gnueabihf/8/include-fixed -I/usr/include/arm-linux-gnueabihf -I/usr/include ../src/header/ui.h -o moc_ui.cpp
 
-moc_DateTimeWidget.cpp: ../src/inc/DateTimeWidget.h \
+moc_DateTimeWidget.cpp: ../src/header/DateTimeWidget.h \
 		moc_predefs.h \
 		/usr/lib/qt5/bin/moc
-	/usr/lib/qt5/bin/moc $(DEFINES) --include /home/pi/project/build-project-Desktop-Debug/moc_predefs.h -I/usr/lib/arm-linux-gnueabihf/qt5/mkspecs/linux-g++ -I/home/pi/project/src -I/usr/include/arm-linux-gnueabihf/qt5 -I/usr/include/arm-linux-gnueabihf/qt5/QtWidgets -I/usr/include/arm-linux-gnueabihf/qt5/QtGui -I/usr/include/arm-linux-gnueabihf/qt5/QtCore -I. -I/usr/include/c++/8 -I/usr/include/arm-linux-gnueabihf/c++/8 -I/usr/include/c++/8/backward -I/usr/lib/gcc/arm-linux-gnueabihf/8/include -I/usr/local/include -I/usr/lib/gcc/arm-linux-gnueabihf/8/include-fixed -I/usr/include/arm-linux-gnueabihf -I/usr/include ../src/inc/DateTimeWidget.h -o moc_DateTimeWidget.cpp
+	/usr/lib/qt5/bin/moc $(DEFINES) --include /home/pi/project/build-project-Desktop-Debug/moc_predefs.h -I/usr/lib/arm-linux-gnueabihf/qt5/mkspecs/linux-g++ -I/home/pi/project/src -I/usr/include/arm-linux-gnueabihf/qt5 -I/usr/include/arm-linux-gnueabihf/qt5/QtWidgets -I/usr/include/arm-linux-gnueabihf/qt5/QtGui -I/usr/include/arm-linux-gnueabihf/qt5/QtCore -I. -I/usr/include/c++/8 -I/usr/include/arm-linux-gnueabihf/c++/8 -I/usr/include/c++/8/backward -I/usr/lib/gcc/arm-linux-gnueabihf/8/include -I/usr/local/include -I/usr/lib/gcc/arm-linux-gnueabihf/8/include-fixed -I/usr/include/arm-linux-gnueabihf -I/usr/include ../src/header/DateTimeWidget.h -o moc_DateTimeWidget.cpp
 
-moc_schedule.cpp: ../src/inc/schedule.h \
+moc_schedule.cpp: ../src/header/schedule.h \
 		moc_predefs.h \
 		/usr/lib/qt5/bin/moc
-	/usr/lib/qt5/bin/moc $(DEFINES) --include /home/pi/project/build-project-Desktop-Debug/moc_predefs.h -I/usr/lib/arm-linux-gnueabihf/qt5/mkspecs/linux-g++ -I/home/pi/project/src -I/usr/include/arm-linux-gnueabihf/qt5 -I/usr/include/arm-linux-gnueabihf/qt5/QtWidgets -I/usr/include/arm-linux-gnueabihf/qt5/QtGui -I/usr/include/arm-linux-gnueabihf/qt5/QtCore -I. -I/usr/include/c++/8 -I/usr/include/arm-linux-gnueabihf/c++/8 -I/usr/include/c++/8/backward -I/usr/lib/gcc/arm-linux-gnueabihf/8/include -I/usr/local/include -I/usr/lib/gcc/arm-linux-gnueabihf/8/include-fixed -I/usr/include/arm-linux-gnueabihf -I/usr/include ../src/inc/schedule.h -o moc_schedule.cpp
+	/usr/lib/qt5/bin/moc $(DEFINES) --include /home/pi/project/build-project-Desktop-Debug/moc_predefs.h -I/usr/lib/arm-linux-gnueabihf/qt5/mkspecs/linux-g++ -I/home/pi/project/src -I/usr/include/arm-linux-gnueabihf/qt5 -I/usr/include/arm-linux-gnueabihf/qt5/QtWidgets -I/usr/include/arm-linux-gnueabihf/qt5/QtGui -I/usr/include/arm-linux-gnueabihf/qt5/QtCore -I. -I/usr/include/c++/8 -I/usr/include/arm-linux-gnueabihf/c++/8 -I/usr/include/c++/8/backward -I/usr/lib/gcc/arm-linux-gnueabihf/8/include -I/usr/local/include -I/usr/lib/gcc/arm-linux-gnueabihf/8/include-fixed -I/usr/include/arm-linux-gnueabihf -I/usr/include ../src/header/schedule.h -o moc_schedule.cpp
 
-moc_settingform.cpp: ../src/inc/settingform.h \
+moc_settingform.cpp: ../src/header/settingform.h \
 		moc_predefs.h \
 		/usr/lib/qt5/bin/moc
-	/usr/lib/qt5/bin/moc $(DEFINES) --include /home/pi/project/build-project-Desktop-Debug/moc_predefs.h -I/usr/lib/arm-linux-gnueabihf/qt5/mkspecs/linux-g++ -I/home/pi/project/src -I/usr/include/arm-linux-gnueabihf/qt5 -I/usr/include/arm-linux-gnueabihf/qt5/QtWidgets -I/usr/include/arm-linux-gnueabihf/qt5/QtGui -I/usr/include/arm-linux-gnueabihf/qt5/QtCore -I. -I/usr/include/c++/8 -I/usr/include/arm-linux-gnueabihf/c++/8 -I/usr/include/c++/8/backward -I/usr/lib/gcc/arm-linux-gnueabihf/8/include -I/usr/local/include -I/usr/lib/gcc/arm-linux-gnueabihf/8/include-fixed -I/usr/include/arm-linux-gnueabihf -I/usr/include ../src/inc/settingform.h -o moc_settingform.cpp
+	/usr/lib/qt5/bin/moc $(DEFINES) --include /home/pi/project/build-project-Desktop-Debug/moc_predefs.h -I/usr/lib/arm-linux-gnueabihf/qt5/mkspecs/linux-g++ -I/home/pi/project/src -I/usr/include/arm-linux-gnueabihf/qt5 -I/usr/include/arm-linux-gnueabihf/qt5/QtWidgets -I/usr/include/arm-linux-gnueabihf/qt5/QtGui -I/usr/include/arm-linux-gnueabihf/qt5/QtCore -I. -I/usr/include/c++/8 -I/usr/include/arm-linux-gnueabihf/c++/8 -I/usr/include/c++/8/backward -I/usr/lib/gcc/arm-linux-gnueabihf/8/include -I/usr/local/include -I/usr/lib/gcc/arm-linux-gnueabihf/8/include-fixed -I/usr/include/arm-linux-gnueabihf -I/usr/include ../src/header/settingform.h -o moc_settingform.cpp
 
-moc_ClickableLabel.cpp: ../src/inc/ClickableLabel.h \
+moc_ClickableLabel.cpp: ../src/header/ClickableLabel.h \
 		moc_predefs.h \
 		/usr/lib/qt5/bin/moc
-	/usr/lib/qt5/bin/moc $(DEFINES) --include /home/pi/project/build-project-Desktop-Debug/moc_predefs.h -I/usr/lib/arm-linux-gnueabihf/qt5/mkspecs/linux-g++ -I/home/pi/project/src -I/usr/include/arm-linux-gnueabihf/qt5 -I/usr/include/arm-linux-gnueabihf/qt5/QtWidgets -I/usr/include/arm-linux-gnueabihf/qt5/QtGui -I/usr/include/arm-linux-gnueabihf/qt5/QtCore -I. -I/usr/include/c++/8 -I/usr/include/arm-linux-gnueabihf/c++/8 -I/usr/include/c++/8/backward -I/usr/lib/gcc/arm-linux-gnueabihf/8/include -I/usr/local/include -I/usr/lib/gcc/arm-linux-gnueabihf/8/include-fixed -I/usr/include/arm-linux-gnueabihf -I/usr/include ../src/inc/ClickableLabel.h -o moc_ClickableLabel.cpp
+	/usr/lib/qt5/bin/moc $(DEFINES) --include /home/pi/project/build-project-Desktop-Debug/moc_predefs.h -I/usr/lib/arm-linux-gnueabihf/qt5/mkspecs/linux-g++ -I/home/pi/project/src -I/usr/include/arm-linux-gnueabihf/qt5 -I/usr/include/arm-linux-gnueabihf/qt5/QtWidgets -I/usr/include/arm-linux-gnueabihf/qt5/QtGui -I/usr/include/arm-linux-gnueabihf/qt5/QtCore -I. -I/usr/include/c++/8 -I/usr/include/arm-linux-gnueabihf/c++/8 -I/usr/include/c++/8/backward -I/usr/lib/gcc/arm-linux-gnueabihf/8/include -I/usr/local/include -I/usr/lib/gcc/arm-linux-gnueabihf/8/include-fixed -I/usr/include/arm-linux-gnueabihf -I/usr/include ../src/header/ClickableLabel.h -o moc_ClickableLabel.cpp
+
+moc_alarm.cpp: ../src/header/alarm.h \
+		moc_predefs.h \
+		/usr/lib/qt5/bin/moc
+	/usr/lib/qt5/bin/moc $(DEFINES) --include /home/pi/project/build-project-Desktop-Debug/moc_predefs.h -I/usr/lib/arm-linux-gnueabihf/qt5/mkspecs/linux-g++ -I/home/pi/project/src -I/usr/include/arm-linux-gnueabihf/qt5 -I/usr/include/arm-linux-gnueabihf/qt5/QtWidgets -I/usr/include/arm-linux-gnueabihf/qt5/QtGui -I/usr/include/arm-linux-gnueabihf/qt5/QtCore -I. -I/usr/include/c++/8 -I/usr/include/arm-linux-gnueabihf/c++/8 -I/usr/include/c++/8/backward -I/usr/lib/gcc/arm-linux-gnueabihf/8/include -I/usr/local/include -I/usr/lib/gcc/arm-linux-gnueabihf/8/include-fixed -I/usr/include/arm-linux-gnueabihf -I/usr/include ../src/header/alarm.h -o moc_alarm.cpp
 
 compiler_moc_objc_header_make_all:
 compiler_moc_objc_header_clean:
@@ -468,35 +485,38 @@ compiler_clean: compiler_rcc_clean compiler_moc_predefs_clean compiler_moc_heade
 
 ####### Compile
 
-main.o: ../src/main.cpp ../src/inc/ui.h \
-		../src/inc/ClickableLabel.h
+main.o: ../src/main.cpp ../src/header/ui.h \
+		../src/header/ClickableLabel.h \
+		../src/header/alarm.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o main.o ../src/main.cpp
 
-ui.o: ../src/UI/ui.cpp ../src/inc/ui.h \
-		../src/inc/ClickableLabel.h \
+ui.o: ../src/UI/ui.cpp ../src/header/ui.h \
+		../src/header/ClickableLabel.h \
+		../src/header/alarm.h \
 		ui_ui.h \
-		../src/inc/DateTimeWidget.h \
-		../src/inc/settingform.h \
-		../src/inc/schedule.h
+		../src/header/DateTimeWidget.h \
+		../src/header/settingform.h \
+		../src/header/schedule.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o ui.o ../src/UI/ui.cpp
 
-DateTimeWidget.o: ../src/UI/DateTimeWidget/DateTimeWidget.cpp ../src/inc/DateTimeWidget.h
+DateTimeWidget.o: ../src/UI/DateTimeWidget/DateTimeWidget.cpp ../src/header/DateTimeWidget.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o DateTimeWidget.o ../src/UI/DateTimeWidget/DateTimeWidget.cpp
 
-schedule.o: ../src/UI/schedule/schedule.cpp ../src/inc/schedule.h \
+schedule.o: ../src/UI/schedule/schedule.cpp ../src/header/schedule.h \
 		ui_schedule.h \
-		../src/inc/ui.h \
-		../src/inc/ClickableLabel.h
+		../src/header/ui.h \
+		../src/header/ClickableLabel.h \
+		../src/header/alarm.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o schedule.o ../src/UI/schedule/schedule.cpp
 
-settingform.o: ../src/UI/settingform/settingform.cpp ../src/inc/settingform.h \
-		ui_settingform.h \
-		../src/inc/ui.h \
-		../src/inc/ClickableLabel.h
+settingform.o: ../src/UI/settingform/settingform.cpp ui_settingform.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o settingform.o ../src/UI/settingform/settingform.cpp
 
-clickablelabel.o: ../src/clickablelabel.cpp ../src/inc/ClickableLabel.h
+clickablelabel.o: ../src/clickablelabel.cpp ../src/header/ClickableLabel.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o clickablelabel.o ../src/clickablelabel.cpp
+
+alarm.o: ../src/UI/alarm/alarm.cpp ../src/header/alarm.h
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o alarm.o ../src/UI/alarm/alarm.cpp
 
 qrc_images.o: qrc_images.cpp 
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o qrc_images.o qrc_images.cpp
@@ -515,6 +535,9 @@ moc_settingform.o: moc_settingform.cpp
 
 moc_ClickableLabel.o: moc_ClickableLabel.cpp 
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o moc_ClickableLabel.o moc_ClickableLabel.cpp
+
+moc_alarm.o: moc_alarm.cpp 
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o moc_alarm.o moc_alarm.cpp
 
 ####### Install
 

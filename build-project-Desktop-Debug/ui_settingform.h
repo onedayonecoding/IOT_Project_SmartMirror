@@ -30,10 +30,6 @@ public:
     QHBoxLayout *horizontalLayout_3;
     QLabel *Off;
     QLabel *On;
-    QWidget *layoutWidget_3;
-    QHBoxLayout *horizontalLayout_2;
-    QLabel *label2;
-    QScrollBar *onoff2;
     QPushButton *quitbutton;
 
     void setupUi(QWidget *SettingForm)
@@ -97,34 +93,6 @@ public:
 
         horizontalLayout_3->addWidget(On);
 
-        layoutWidget_3 = new QWidget(SettingForm);
-        layoutWidget_3->setObjectName(QStringLiteral("layoutWidget_3"));
-        layoutWidget_3->setGeometry(QRect(90, 260, 511, 61));
-        horizontalLayout_2 = new QHBoxLayout(layoutWidget_3);
-        horizontalLayout_2->setObjectName(QStringLiteral("horizontalLayout_2"));
-        horizontalLayout_2->setContentsMargins(0, 0, 0, 0);
-        label2 = new QLabel(layoutWidget_3);
-        label2->setObjectName(QStringLiteral("label2"));
-        label2->setMaximumSize(QSize(150, 50));
-        label2->setFont(font);
-
-        horizontalLayout_2->addWidget(label2);
-
-        onoff2 = new QScrollBar(layoutWidget_3);
-        onoff2->setObjectName(QStringLiteral("onoff2"));
-        sizePolicy.setHeightForWidth(onoff2->sizePolicy().hasHeightForWidth());
-        onoff2->setSizePolicy(sizePolicy);
-        onoff2->setMaximumSize(QSize(500, 100));
-        onoff2->setContextMenuPolicy(Qt::NoContextMenu);
-        onoff2->setLayoutDirection(Qt::LeftToRight);
-        onoff2->setMaximum(1);
-        onoff2->setPageStep(1);
-        onoff2->setTracking(true);
-        onoff2->setOrientation(Qt::Horizontal);
-        onoff2->setInvertedControls(true);
-
-        horizontalLayout_2->addWidget(onoff2);
-
         quitbutton = new QPushButton(SettingForm);
         quitbutton->setObjectName(QStringLiteral("quitbutton"));
         quitbutton->setGeometry(QRect(820, 490, 131, 71));
@@ -138,10 +106,9 @@ public:
     void retranslateUi(QWidget *SettingForm)
     {
         SettingForm->setWindowTitle(QApplication::translate("SettingForm", "Form", nullptr));
-        label1->setText(QApplication::translate("SettingForm", "\352\270\260\353\212\2451", nullptr));
+        label1->setText(QApplication::translate("SettingForm", "\354\235\270\354\262\264\352\260\220\354\247\200", nullptr));
         Off->setText(QApplication::translate("SettingForm", "Off", nullptr));
         On->setText(QApplication::translate("SettingForm", "On", nullptr));
-        label2->setText(QApplication::translate("SettingForm", "\352\270\260\353\212\2452", nullptr));
         quitbutton->setText(QApplication::translate("SettingForm", "Quit", nullptr));
     } // retranslateUi
 

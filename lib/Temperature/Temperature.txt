@@ -1,1 +1,0 @@
-Temperature = 31.48°C

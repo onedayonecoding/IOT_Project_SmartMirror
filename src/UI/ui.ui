@@ -19,47 +19,6 @@
   <property name="windowTitle">
    <string>UI</string>
   </property>
-  <widget class="QLabel" name="WLabel">
-   <property name="geometry">
-    <rect>
-     <x>30</x>
-     <y>380</y>
-     <width>181</width>
-     <height>51</height>
-    </rect>
-   </property>
-   <property name="font">
-    <font>
-     <family>HY헤드라인M</family>
-     <pointsize>20</pointsize>
-    </font>
-   </property>
-   <property name="styleSheet">
-    <string notr="true"/>
-   </property>
-   <property name="text">
-    <string>오늘의 날씨</string>
-   </property>
-  </widget>
-  <widget class="QLabel" name="WeatherLabel">
-   <property name="geometry">
-    <rect>
-     <x>30</x>
-     <y>440</y>
-     <width>181</width>
-     <height>51</height>
-    </rect>
-   </property>
-   <property name="font">
-    <font>
-     <family>HY헤드라인M</family>
-     <pointsize>20</pointsize>
-    </font>
-   </property>
-   <property name="text">
-    <string>날씨 그림</string>
-   </property>
-  </widget>
   <widget class="QPushButton" name="VoiceButton">
    <property name="geometry">
     <rect>
@@ -159,7 +118,7 @@
    <property name="geometry">
     <rect>
      <x>20</x>
-     <y>240</y>
+     <y>350</y>
      <width>231</width>
      <height>131</height>
     </rect>
@@ -332,7 +291,7 @@
      </widget>
     </item>
     <item>
-     <widget class="QPushButton" name="pushButton_5">
+     <widget class="QPushButton" name="AlarmButton">
       <property name="font">
        <font>
         <family>HY헤드라인M</family>
@@ -346,7 +305,7 @@
        <string notr="true"/>
       </property>
       <property name="text">
-       <string>기능2 버튼</string>
+       <string>알람 설정</string>
       </property>
      </widget>
     </item>
@@ -382,7 +341,7 @@
        </font>
       </property>
       <property name="text">
-       <string>온도</string>
+       <string>실내온도</string>
       </property>
      </widget>
     </item>
@@ -422,6 +381,79 @@
    <property name="text">
     <string>Quit</string>
    </property>
+  </widget>
+  <widget class="QWidget" name="layoutWidget">
+   <property name="geometry">
+    <rect>
+     <x>20</x>
+     <y>240</y>
+     <width>331</width>
+     <height>78</height>
+    </rect>
+   </property>
+   <layout class="QHBoxLayout" name="horizontalLayout_2">
+    <item>
+     <layout class="QVBoxLayout" name="verticalLayout_4">
+      <item>
+       <widget class="QLabel" name="WLabel">
+        <property name="maximumSize">
+         <size>
+          <width>350</width>
+          <height>16777215</height>
+         </size>
+        </property>
+        <property name="font">
+         <font>
+          <family>HY헤드라인M</family>
+          <pointsize>20</pointsize>
+         </font>
+        </property>
+        <property name="styleSheet">
+         <string notr="true"/>
+        </property>
+        <property name="text">
+         <string>오늘의 날씨</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QLabel" name="WLabel_T">
+        <property name="maximumSize">
+         <size>
+          <width>350</width>
+          <height>50</height>
+         </size>
+        </property>
+        <property name="font">
+         <font>
+          <family>HY헤드라인M</family>
+          <pointsize>20</pointsize>
+         </font>
+        </property>
+        <property name="styleSheet">
+         <string notr="true"/>
+        </property>
+        <property name="text">
+         <string>외부 온도</string>
+        </property>
+       </widget>
+      </item>
+     </layout>
+    </item>
+    <item>
+     <widget class="QLabel" name="Wimage">
+      <property name="maximumSize">
+       <size>
+        <width>75</width>
+        <height>75</height>
+       </size>
+      </property>
+      <property name="text">
+       <string>날씨사진</string>
+      </property>
+     </widget>
+    </item>
+   </layout>
   </widget>
  </widget>
  <resources/>

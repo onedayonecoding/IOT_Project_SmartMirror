@@ -1,6 +1,6 @@
-#include "../../inc/schedule.h"
+#include "../../header/schedule.h"
 #include "ui_schedule.h"
-#include "../../inc/ui.h"
+#include "../../header/ui.h"
 
 #include <QFile>
 #include <QPushButton>
@@ -65,8 +65,8 @@ void Schedule::MakeFile(){
 
     QDate date = ui->calendarWidget->selectedDate();
     QString sdate=date.toString();
-    QFile makefile("../"+sdate+".txt");
-    QFile::remove("../"+sdate+".txt"); //기존 일정 내용 지우기 위해서
+    QFile makefile("schedule/"+sdate+".txt");
+    QFile::remove("schedule/"+sdate+".txt"); //기존 일정 내용 지우기 위해서
     makefile.open(QFile::WriteOnly|QFile::Append|QFile::Text);
     QTextStream SaveFile(&makefile);
     QString schtext = sch->toPlainText();
@@ -81,5 +81,5 @@ void Schedule::cancle(){
     this->close();
     openui=new UI;
     openui->show();
-
 }
+

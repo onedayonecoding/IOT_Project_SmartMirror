@@ -38,7 +38,7 @@
        </font>
       </property>
       <property name="text">
-       <string>기능1</string>
+       <string>인체감지</string>
       </property>
      </widget>
     </item>
@@ -137,11 +137,30 @@
     </item>
    </layout>
   </widget>
+  <widget class="QPushButton" name="quitbutton">
+   <property name="geometry">
+    <rect>
+     <x>820</x>
+     <y>490</y>
+     <width>131</width>
+     <height>71</height>
+    </rect>
+   </property>
+   <property name="font">
+    <font>
+     <family>HY헤드라인M</family>
+     <pointsize>20</pointsize>
+    </font>
+   </property>
+   <property name="text">
+    <string>Quit</string>
+   </property>
+  </widget>
   <widget class="QWidget" name="layoutWidget_3">
    <property name="geometry">
     <rect>
      <x>90</x>
-     <y>260</y>
+     <y>280</y>
      <width>511</width>
      <height>61</height>
     </rect>
@@ -162,7 +181,7 @@
        </font>
       </property>
       <property name="text">
-       <string>기능2</string>
+       <string>자동 에어컨</string>
       </property>
      </widget>
     </item>
@@ -204,25 +223,6 @@
      </widget>
     </item>
    </layout>
-  </widget>
-  <widget class="QPushButton" name="quitbutton">
-   <property name="geometry">
-    <rect>
-     <x>820</x>
-     <y>490</y>
-     <width>131</width>
-     <height>71</height>
-    </rect>
-   </property>
-   <property name="font">
-    <font>
-     <family>HY헤드라인M</family>
-     <pointsize>20</pointsize>
-    </font>
-   </property>
-   <property name="text">
-    <string>Quit</string>
-   </property>
   </widget>
  </widget>
  <resources/>

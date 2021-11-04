@@ -1,4 +1,4 @@
-#include "../../inc/DateTimeWidget.h"
+#include "../../header/DateTimeWidget.h"
 #include <QVBoxLayout>
 
 DateTimeWidget::DateTimeWidget(QWidget *parent) : QWidget(parent)
@@ -14,7 +14,6 @@ DateTimeWidget::DateTimeWidget(QWidget *parent) : QWidget(parent)
     labelTop->setFont(mFont);
     labelTop->setAlignment(Qt::AlignCenter);
     //setSizePolicy(policy);
-
 
     timeString = QTime::currentTime().toString();
     labelBottom = new QLabel(this);

@@ -1,17 +1,17 @@
-#include "../inc/ui.h"
+#include "../header/ui.h"
 #include "ui_ui.h"
-#include "../inc/DateTimeWidget.h"
-#include "../inc/settingform.h"
-#include "../inc/schedule.h"
-#include "../inc/ClickableLabel.h"
+#include "../header/DateTimeWidget.h"
+#include "../header/settingform.h"
+#include "../header/schedule.h"
+#include "../header/ClickableLabel.h"
+
+
 
 #include <QFile>
 #include <QPushButton>
 #include <QProcess>
 #include <QTextStream>
 #include <QTextCodec> // QT5 가능
-#include <QTextBrowser>
-#include <QUrl>
 #include <QDebug>
 
 
@@ -26,7 +26,6 @@ UI::UI(QWidget *parent)
     settingForm = new SettingForm;
     scheDule = new Schedule;
 
-
     this->move(0,0);
     this->setStyleSheet("background:Black");
     this->setWindowFlag(Qt::FramelessWindowHint);
@@ -39,9 +38,7 @@ UI::UI(QWidget *parent)
     ui->Fan->setStyleSheet(css);
     ui->SchLabel->setStyleSheet(css);
     ui->WLabel->setStyleSheet(css);
-    ui->WeatherLabel->setStyleSheet(css);
-
-
+    ui->WLabel_T->setStyleSheet(css);
 
     //buttoncolor
      //css = QString("background-color : #000000; color:#fffff1");
@@ -55,6 +52,12 @@ UI::UI(QWidget *parent)
     DateTimeWidget * datetimeWidget = new DateTimeWidget(this);
     ui->TimeLayout->addWidget(datetimeWidget);
 
+    //알람 버튼
+    alarm = new Alarm(this);
+    alarm->move(800,100);
+    alarm->close();
+    connect(ui->AlarmButton,SIGNAL(clicked()),SLOT(SetAlarm()));
+
     // UI 온도표시
     QTimer *t = new QTimer();
     t->setInterval(2000);
@@ -63,13 +66,10 @@ UI::UI(QWidget *parent)
     connect(t,&QTimer::timeout,this,&UI::VoiceCommand);
     t->start(); //타이머 시작
 
-
-
     // 거울 모드
     connect(ui->MirrorButton1,SIGNAL(clicked()),SLOT(MirrorMode()));
     connect(MirrorButton2,SIGNAL(clicked()),MirrorButton2,SLOT(close()));
     connect(MirrorButton2,SIGNAL(clicked()),SLOT(show()));
-
 
     // 선풍기, 에어컨 온오프
     connect(ui->AirButton,SIGNAL(clicked()),SLOT(AirOnOff()));
@@ -84,7 +84,7 @@ UI::UI(QWidget *parent)
     //일정 표시
     QString sdate = QDate::currentDate().toString();
     //qDebug()<<sdate;
-    QFile sch("../"+sdate+".txt");
+    QFile sch("schedule/"+sdate+".txt");
 
     if(!sch.open(QFile::ReadOnly | QFile::Text)){
         qDebug("could not open schdule");
@@ -97,10 +97,10 @@ UI::UI(QWidget *parent)
     sch.close();
 
     //날씨 프로세스 실행
-    QProcess::execute("../weather/weather");
+
 
     //날씨 표시
-    QFile w("../weather/weather.txt");
+    QFile w("weather/weather.txt");
 
     if(!w.open(QFile::ReadOnly | QFile::Text)){
         qDebug("could not open wheather");
@@ -108,22 +108,56 @@ UI::UI(QWidget *parent)
     }
     else{
         QTextStream weathertext(&w);
-        QString weather=weathertext.readLine();
+        QString weather=weathertext.readAll();
+        QStringList temp = weather.split("\n");
+        QString w = temp[0];
+        QString t = temp[1];
         QTextCodec *codec = QTextCodec::codecForLocale();   // QT 5  txt utf-8 encoding
-        QString strUnicodeLine = codec->toUnicode( weather.toLocal8Bit() );
+        QString strUnicodeLine = codec->toUnicode( w.toLocal8Bit() );
 
-        ui->WeatherLabel->setText(weather);
+        w_img[0].load(":/images/cloud.png");
+        w_img[1].load(":/images/rain.png");
+        w_img[2].load(":/images/snow.png");
+        w_img[3].load(":/images/sun.png");
+        w_img[4].load(":/images/cloudy.png");
+        ui->WLabel->setText(w);
+        ui->WLabel_T->setText(t);
+        if(w=="현재날씨 : 흐림"){
+            qDebug("흐림ｔ（");
+            int w = 75;  //ui->Wimage->width();
+            int h = 75;  //ui->Wimage->height();
+            ui->Wimage->setPixmap(w_img[0].scaled(w,h,Qt::KeepAspectRatio));
+        }else if(w=="현재날씨 : 비"||w=="현재날씨 : 약한비"||w=="현재날씨 : 강한비"){
+            qDebug("비");
+            int w = 75;  //ui->Wimage->width();
+            int h = 75;  //ui->Wimage->height();
+            ui->Wimage->setPixmap(w_img[1].scaled(w,h,Qt::KeepAspectRatio));
+        }else if(w=="현재날씨 : 눈"||w=="현재날씨 : 약한눈"||w=="현재날씨 : 강한눈"||w=="현재날씨 : 진눈깨비"||w=="현재날씨 : 소낙눈"){
+            qDebug("눈");
+            int w = 75;  //ui->Wimage->width();
+            int h = 75;  //ui->Wimage->height();
+            ui->Wimage->setPixmap(w_img[2].scaled(w,h,Qt::KeepAspectRatio));
+        }else if(w=="현재날씨 : 맑음"||w=="현재날씨 : 구름조금"){
+            qDebug("맑음");
+            int w = 75;  //ui->Wimage->width();
+            int h = 75;  //ui->Wimage->height();
+            ui->Wimage->setPixmap(w_img[3].scaled(w,h,Qt::KeepAspectRatio));
+        }else if(w=="현재날씨 : 구름많음"){
+            qDebug("구름많음");
+            int w = 75;  //ui->Wimage->width();
+            int h = 75;  //ui->Wimage->height();
+            ui->Wimage->setPixmap(w_img[4].scaled(w,h,Qt::KeepAspectRatio));
+        }
     }
     w.close();
+
 
     //감정인식 웹사이트 실행
     connect(ui->MindButton,SIGNAL(clicked()),SLOT(Web()));
 
     //음성인식
     connect(ui->VoiceButton,SIGNAL(clicked()),SLOT(Voice()));
-
     connect(ui->QuitButton,SIGNAL(clicked()),SLOT(close()));
-
 
 }
 
@@ -138,6 +172,20 @@ UI::~UI()
 
 //기능 메소드 작성 시작
 
+void UI::SetAlarm(){
+
+    if(alarmnum==0){
+        alarm->show();
+        alarmnum=1;
+        qDebug("alarmon");
+    }else{
+        alarm->close();
+        qDebug("alarmoff");
+        alarmnum=0;
+    }
+
+}
+
 void UI::MirrorMode(){       //거울모드 메소드
     this->close();
     MirrorButton2->move(0,0);
@@ -149,24 +197,40 @@ void UI::MirrorMode(){       //거울모드 메소드
 }
 
 void UI::AirOnOff(){
-    if(ui->AirButton->text()=="On"){
-        ui->AirButton->setText("Off");
-        //에어컨 off 기능 추가요망
+    QFile f("senser/Air.txt");
+    QTextStream SaveFile(&f);
+    if(!f.open(QFile::WriteOnly | QFile::Text)){
+        qDebug("could not open Airfile");
+        exit(1);
     }else{
-        ui->AirButton->setText("On");
-        // 에어컨 on 기능 추가요망
+        if(ui->AirButton->text()=="On"){
+            ui->AirButton->setText("Off");
+            SaveFile<<"on";
+            qDebug("on");
+        }else{
+            ui->AirButton->setText("On");
+            SaveFile<<"off";
+            qDebug("off");
+        }
     }
 }
 
 void UI::FanOnOff(){
-    if(ui->FanButton->text()=="On"){
-        ui->FanButton->setText("Off");
-        QProcess::execute("../../lib/motor/motor_on");
-        qDebug("on");
+    QFile f("senser/Motor.txt");
+    QTextStream SaveFile(&f);
+    if(!f.open(QFile::WriteOnly | QFile::Text)){
+        qDebug("could not open Fanfile");
+        exit(1);
     }else{
-        ui->FanButton->setText("On");
-        QProcess::execute("../../lib/motor/motor_off");
-        qDebug("off");
+        if(ui->FanButton->text()=="On"){
+            ui->FanButton->setText("Off");
+            SaveFile<<"on";
+            qDebug("on");
+        }else{
+            ui->FanButton->setText("On");
+            SaveFile<<"off";
+            qDebug("off");
+        }
     }
 
 }
@@ -185,7 +249,7 @@ void UI::Sch(){
 }
 
 void UI::Web(){
-    QProcess::execute("../../lib/url.sh");
+    QProcess::execute("minddetect/url.sh");
 }
 
 
@@ -193,7 +257,7 @@ void UI::TempUpdate(){
     QString T="0";
     vector<QString> temp;
 
-    QFile t("../../lib/Temperature/Temperature.txt");             // 온도 파일 열기
+    QFile t("senser/Temperature.txt");             // 온도 파일 열기
 
     if(!t.open(QFile::ReadOnly | QFile::Text)){
         qDebug("could not open temperature");
@@ -201,7 +265,7 @@ void UI::TempUpdate(){
     }else{                                              // 3번째 단어가 온도일시
         QTextStream in(&t);
         QString word=in.readLine();
-        //qDebug()<<word;
+
         QStringList temp = word.split(" ");
         T = temp[2];
     }
@@ -213,7 +277,7 @@ void UI::TempUpdate(){
 void UI::HumiUpdate(){
     QString T="0";
     vector<QString> temp;
-    QFile h("../../lib/Temperature/Humidity.txt");            //  파일 열기
+    QFile h("senser/Humidity.txt");            //  파일 열기
 
     if(!h.open(QFile::ReadOnly | QFile::Text)){
         qDebug("could not open temperature");
@@ -238,8 +302,10 @@ void UI::Voice(){
         ui->VoiceButton->setText("음성인식 종료");
         Vmessage = new QLabel(this);
         Vmessage->show();
-        Vmessage->resize(300,200);
+        Vmessage->resize(450,100);
         Vmessage->move(300,100);
+        Vmessage->setAlignment(Qt::AlignHCenter);
+        Vmessage->setAlignment(Qt::AlignVCenter);
         VT->setInterval(1000);
         connect(VT,&QTimer::timeout,this,&UI::VoiceUpdate);
 
@@ -253,14 +319,15 @@ void UI::Voice(){
 }
 
 void UI::VoiceUpdate(){
-    QFile *f = new QFile("../message.txt");
+    QFile *f = new QFile("message.txt");
     if(!f->open(QFile::ReadOnly | QFile::Text)){
         qDebug("cannot find voicefile");
 
     }else{
+
         QString message =f->readLine();
 
-        QString css = QString("font : 100px; font : hy헤드라인m; color : #fffff1");
+        QString css = QString("font : 60px; font : hy헤드라인m; color : #fffff1");
         Vmessage->setStyleSheet(css);
         Vmessage->setText(message);
 
@@ -268,7 +335,7 @@ void UI::VoiceUpdate(){
 }
 
 void UI::VoiceCommand(){
-    QFile *f = new QFile("../message.txt");
+    QFile *f = new QFile("message.txt");
     if(QString::compare(ui->VoiceButton->text(),"음성인식 종료")==0){
 
         if(!f->open(QFile::ReadOnly | QFile::Text)){
