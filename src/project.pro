@@ -14,7 +14,7 @@ SOURCES += \
     UI/DateTimeWidget/DateTimeWidget.cpp\
     UI/schedule/schedule.cpp\
     UI/settingform/settingform.cpp \
-    clickablelabel.cpp \
+    UI/clickablelabel/clickablelabel.cpp \
     UI/alarm/alarm.cpp
 
 HEADERS += \

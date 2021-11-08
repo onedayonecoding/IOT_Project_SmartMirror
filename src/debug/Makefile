@@ -55,7 +55,7 @@ SOURCES       = ../main.cpp \
 		../UI/DateTimeWidget/DateTimeWidget.cpp \
 		../UI/schedule/schedule.cpp \
 		../UI/settingform/settingform.cpp \
-		../clickablelabel.cpp \
+		../UI/clickablelabel/clickablelabel.cpp \
 		../UI/alarm/alarm.cpp qrc_images.cpp \
 		moc_ui.cpp \
 		moc_DateTimeWidget.cpp \
@@ -171,7 +171,7 @@ DIST          = /usr/lib/arm-linux-gnueabihf/qt5/mkspecs/features/spec_pre.prf \
 		../UI/DateTimeWidget/DateTimeWidget.cpp \
 		../UI/schedule/schedule.cpp \
 		../UI/settingform/settingform.cpp \
-		../clickablelabel.cpp \
+		../UI/clickablelabel/clickablelabel.cpp \
 		../UI/alarm/alarm.cpp
 QMAKE_TARGET  = project
 DESTDIR       = 
@@ -380,7 +380,7 @@ distdir: FORCE
 	$(COPY_FILE) --parents ../UI/images.qrc $(DISTDIR)/
 	$(COPY_FILE) --parents /usr/lib/arm-linux-gnueabihf/qt5/mkspecs/features/data/dummy.cpp $(DISTDIR)/
 	$(COPY_FILE) --parents ../header/ui.h ../header/DateTimeWidget.h ../header/schedule.h ../header/settingform.h ../header/ClickableLabel.h ../header/alarm.h $(DISTDIR)/
-	$(COPY_FILE) --parents ../main.cpp ../UI/ui.cpp ../UI/DateTimeWidget/DateTimeWidget.cpp ../UI/schedule/schedule.cpp ../UI/settingform/settingform.cpp ../clickablelabel.cpp ../UI/alarm/alarm.cpp $(DISTDIR)/
+	$(COPY_FILE) --parents ../main.cpp ../UI/ui.cpp ../UI/DateTimeWidget/DateTimeWidget.cpp ../UI/schedule/schedule.cpp ../UI/settingform/settingform.cpp ../UI/clickablelabel/clickablelabel.cpp ../UI/alarm/alarm.cpp $(DISTDIR)/
 	$(COPY_FILE) --parents ../UI/ui.ui ../UI/settingform/settingform.ui ../UI/schedule/schedule.ui $(DISTDIR)/
 
 
@@ -522,8 +522,8 @@ settingform.o: ../UI/settingform/settingform.cpp ../header/settingform.h \
 		ui_settingform.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o settingform.o ../UI/settingform/settingform.cpp
 
-clickablelabel.o: ../clickablelabel.cpp ../header/ClickableLabel.h
-	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o clickablelabel.o ../clickablelabel.cpp
+clickablelabel.o: ../UI/clickablelabel/clickablelabel.cpp ../header/ClickableLabel.h
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o clickablelabel.o ../UI/clickablelabel/clickablelabel.cpp
 
 alarm.o: ../UI/alarm/alarm.cpp ../header/alarm.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o alarm.o ../UI/alarm/alarm.cpp

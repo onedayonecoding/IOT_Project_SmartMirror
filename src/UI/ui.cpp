@@ -168,6 +168,7 @@ void UI::AirOnOff(){
             qDebug("off");
         }
     }
+    f.close();
 }
 
 void UI::FanOnOff(){
@@ -187,7 +188,7 @@ void UI::FanOnOff(){
             qDebug("off");
         }
     }
-
+    f.close();
 }
 
 void UI::Setting(){

@@ -27,6 +27,7 @@ SettingForm::SettingForm(QWidget *parent) :
     connect(ui->onoff1,SIGNAL(valueChanged(int)),SLOT(detect()));
     setStyleSheet("background:black");
 
+    //2초마다 옵션 감지
     QTimer *a = new QTimer();
     a->setInterval(2000);
     connect(a,&QTimer::timeout,this,&SettingForm::detect);
@@ -47,6 +48,7 @@ void SettingForm::settingclose(){
     openui->show();
 }
 
+//인체감지 센서 작동시 화면 검은색으로
 void SettingForm::detect(){
     if(ui->onoff1->value()==0){
         qDebug("off");
@@ -74,6 +76,7 @@ void SettingForm::detect(){
                 qDebug("fail detect");
             }
         }
+        f.close();
     }
 }
 void SettingForm::autoair(){
@@ -88,13 +91,26 @@ void SettingForm::autoair(){
 
     if(ui->onoff2->value()==0){
         if(word=="auto"){
-            Airtext<<"off";
+            QFile::remove("senser/Air.txt");
+            QFile air("senser/Air.txt");
+            air.open(QFile::WriteOnly|QFile::Append|QFile::Text);
+            QTextStream Airtext2(&air);
+
+            Airtext2<<"off";
+            air.close();
         }
 
     }else{
         if(word=="on"||word=="off"){
+            QFile::remove("senser/Air.txt");
+            QFile air("senser/Air.txt");
+            air.open(QFile::WriteOnly|QFile::Append|QFile::Text);
+            QTextStream Airtext(&air);
             Airtext<<"auto";
+            air.close();
+
             qDebug("air auto on");
         }
     }
+    air.close();
 }

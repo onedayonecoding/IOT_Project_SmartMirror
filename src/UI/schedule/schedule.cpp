@@ -36,11 +36,13 @@ void Schedule::on_calendarWidget_clicked(const QDate &date)
     QString text = QString(a+"\n 일정을 쓰세요!!");    // 일정이 없을시 초기값
 
     QString sdate=date.toString();
-    QFile h("../"+sdate+".txt");
+    QFile h("schedule/"+sdate+".txt");
 
     if(h.open(QFile::ReadOnly | QFile::Text)){  //파일이 있으면 기존일정 대로
         text=h.readAll();
     }
+    h.close();
+
     QPushButton *ok = new QPushButton(sch);
     sch->setPlainText(text);
     sch->resize(224,600);
@@ -65,8 +67,9 @@ void Schedule::MakeFile(){
 
     QDate date = ui->calendarWidget->selectedDate();
     QString sdate=date.toString();
-    QFile makefile("schedule/"+sdate+".txt");
     QFile::remove("schedule/"+sdate+".txt"); //기존 일정 내용 지우기 위해서
+    QFile makefile("schedule/"+sdate+".txt");
+
     makefile.open(QFile::WriteOnly|QFile::Append|QFile::Text);
     QTextStream SaveFile(&makefile);
     QString schtext = sch->toPlainText();
