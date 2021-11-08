@@ -1,0 +1,1 @@
+google-assistant-demo --project-id smspeaker --device-model-id smspeaker-raspberry-0d7btl

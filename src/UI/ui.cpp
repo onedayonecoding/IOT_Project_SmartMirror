@@ -13,6 +13,8 @@
 #include <QTextStream>
 #include <QTextCodec> // QT5 가능
 #include <QDebug>
+#include <string.h>
+#include <QString>
 
 
 using namespace std;
@@ -99,6 +101,7 @@ UI::UI(QWidget *parent)
 
 
     //날씨 프로세스 실행
+
     Weathershow();
     QTimer* weathertime = new QTimer();
     weathertime->setInterval(3000000);
@@ -251,6 +254,12 @@ void UI::HumiUpdate(){
 void UI::Voice(){
 
     if(ui->VoiceButton->text()=="음성인식"){
+        //QProcess::execute("voice/mic.sh");
+        QProcess *process =new QProcess;
+        process->setWorkingDirectory("voice");
+        process->start("./mic.sh");
+        process->waitForStarted();
+
         ui->VoiceButton->setText("음성인식 종료");
         Vmessage = new QLabel(this);
         Vmessage->show();
@@ -266,12 +275,20 @@ void UI::Voice(){
         ui->VoiceButton->setText("음성인식");
         VT->stop();  //종료
         Vmessage->close();
+        QFile *f = new QFile("voice/output.txt");
+        if(!f->open(QFile::WriteOnly | QFile::Text)){
+            qDebug("cannot find voicefile");
+
+        }
+        QTextStream SaveFile(f);
+        QString schtext = "3초 뒤에 말하세요";
+        SaveFile<<schtext;
     }
 
 }
 
 void UI::VoiceUpdate(){
-    QFile *f = new QFile("message.txt");
+    QFile *f = new QFile("voice/output.txt");
     if(!f->open(QFile::ReadOnly | QFile::Text)){
         qDebug("cannot find voicefile");
 
@@ -279,55 +296,68 @@ void UI::VoiceUpdate(){
 
         QString message =f->readLine();
 
-        QString css = QString("font : 60px; font : hy헤드라인m; color : #fffff1");
+        QString css = QString("font : 40px; font : hy헤드라인m; color : #fffff1");
         Vmessage->setStyleSheet(css);
         Vmessage->setText(message);
 
     }
 }
-
+void textclear(){
+    QFile *a = new QFile("voice/output.txt");
+    if(!a->open(QFile::WriteOnly | QFile::Text)){
+        qDebug("cannot find voicefile");
+    }
+    QTextStream SaveFile(a);
+    QString schtext = "";
+    SaveFile<<schtext;
+    a->close();
+}
 void UI::VoiceCommand(){
-    QFile *f = new QFile("message.txt");
+    QFile *f = new QFile("voice/output.txt");
     if(QString::compare(ui->VoiceButton->text(),"음성인식 종료")==0){
 
         if(!f->open(QFile::ReadOnly | QFile::Text)){
             qDebug("cannot find voicefile");
 
         }else{
-
             QString message =f->readLine();
-
-            if(QString::compare(message,"거울모드")==0){
+            if(message.contains("거울")){
                 MirrorMode();
-
-            }else if(QString::compare(message,"cancle")==0){
+                textclear();
+            }else if(message.contains("취소")){
                 MirrorButton2->close();
                 scheDule->close();
                 settingForm->close();
                 this->show();
-            }else if(QString::compare(message,"fan on")==0||QString::compare(message,"fan off")==0){
+                textclear();
+            }else if(message.contains("선풍기")){
                 FanOnOff();
-            }else if(QString::compare(message,"air on")==0||QString::compare(message,"air off")==0){
+                textclear();
+            }else if(message.contains("에어컨")){
                 AirOnOff();
-            }else if(QString::compare(message,"일정")==0){
+                textclear();
+            }else if(message.contains("일정")){
                 Sch();
+                textclear();
             }
-            /*else if(QString::compare(message,"감정인식")==0){
+            else if(message.contains("감정")){
                 Web();
-            }*/
-
+                textclear();
+            }
         }
     }
 }
 
 void UI::WeatherProcess(){
-    QProcess::execute("../function/weather/dist/weather");
+    QProcess *process =new QProcess;
+    process->setWorkingDirectory("weather/dist");
+    process->start("./weather");
 }
 
 void UI::Weathershow(){
     qDebug("weather show");
     //날씨 표시
-    QFile w("weather.txt");
+    QFile w("weather/dist/weather.txt");
 
     if(!w.open(QFile::ReadOnly | QFile::Text)){
         qDebug("could not open wheather");

@@ -2,6 +2,7 @@
 #include <QVBoxLayout>
 #include <QDebug>
 #include<QTime>
+#include<QProcess>
 
 #include "../../header/alarm.h"
 Alarm::Alarm(QWidget *parent) : QWidget(parent)
@@ -46,12 +47,18 @@ void Alarm::Alarmcheck(){
     if(stime==QTime::currentTime().toString(("hh:mm AP"))){
         qDebug("alarm");
         if(alarmnum==0){
+            QProcess *process =new QProcess;
+            process->setWorkingDirectory("../UI/alarm");
+            process->start("./alarm");
+            process->waitForFinished();
+
             alarmbutton = new QPushButton("alarmcheck");
 
             alarmbutton->resize(1024,600);
             alarmbutton->move(0,0);
             alarmbutton->show();
             alarmnum=1;
+
         }
         connect(alarmbutton,SIGNAL(clicked()),this,SLOT(DeleteAlarm()));
         connect(alarmbutton,SIGNAL(clicked()),alarmbutton,SLOT(close()));
